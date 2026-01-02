@@ -181,11 +181,11 @@ export default function Portfolio() {
                     key={index}
                     className="w-full flex-shrink-0 px-3 sm:px-6 md:px-8 py-4"
                   >
-                    <div className="card-ios hover:shadow-ios group cursor-pointer transition-all duration-300 max-w-full sm:max-w-2xl mx-auto touch-manipulation w-full overflow-hidden">
+                    <div className="card-ios h-full hover:shadow-ios group cursor-pointer transition-all duration-300 max-w-full sm:max-w-2xl mx-auto touch-manipulation w-full overflow-hidden">
                       <div className="mb-4 flex items-center justify-between">
                         <div className="flex items-center gap-3">
                           <IconComponent className="w-10 h-10 text-navy-900 transform transition-transform duration-300" />
-                          <span className="text-sm font-medium text-navy-600 bg-navy-50 px-3 py-1 rounded-full">
+                          <span className="hidden sm:flex text-sm font-medium text-navy-600 bg-navy-50 px-3 py-1 rounded-full">
                             {item.category}
                           </span>
                         </div>
@@ -243,9 +243,16 @@ export default function Portfolio() {
                         )}
                       </div>
 
-                      <h3 className="text-xl font-bold text-navy-900 mb-3">
+
+                      <h3 className="text-xl font-bold text-navy-900 mb-2">
                         {item.title}
                       </h3>
+                      <div className='mb-1'>
+                        <span className="sm:hidden text-sm font-medium text-navy-600 bg-navy-50 px-2 py-1 rounded-full">
+                          {item.category}
+                        </span>
+                      </div>
+
                       <p className="text-navy-600 leading-relaxed text-sm">
                         {item.description}
                       </p>
