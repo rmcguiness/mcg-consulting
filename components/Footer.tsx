@@ -32,8 +32,8 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold mb-4">Contact</h4>
             <ul className="space-y-2 text-navy-300">
-              <li>Email: hello@mcgconsulting.com</li>
-              <li>Phone: (555) 123-4567</li>
+              <li>Email: ryanmcguiness123@gmail.com</li>
+              <li>Phone: (732) 675-8146</li>
             </ul>
           </div>
         </div>

@@ -32,7 +32,7 @@ export default function Contact() {
             Get In Touch
           </h2>
           <p className="text-xl text-navy-600 max-w-2xl mx-auto">
-            Ready to start your project? Let's discuss how we can help.
+            Ready to start your project? Let&apos;s discuss how we can help.
           </p>
         </div>
 
