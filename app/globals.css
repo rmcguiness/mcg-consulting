@@ -3,54 +3,104 @@
 @tailwind utilities;
 
 :root {
-  --navy: #0a1c2e;
-  --navy-light: #102a43;
-  --navy-lighter: #243b53;
+	--navy: #0a1c2e;
+	--navy-light: #102a43;
+	--navy-lighter: #243b53;
 }
 
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: #ffffff;
-  color: var(--navy);
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+		'Helvetica Neue', Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	background-color: #ffffff;
+	color: var(--navy);
 }
 
 /* Smooth scrolling */
 html {
-  scroll-behavior: smooth;
+	scroll-behavior: smooth;
 }
 
 /* iOS-like button styles */
 .btn-ios {
-  @apply px-6 py-3 rounded-ios font-medium transition-all duration-200;
-  @apply active:scale-95;
+	@apply px-6 py-3 rounded-ios font-medium transition-all duration-200;
+	@apply active:scale-95;
 }
 
 .btn-primary {
-  @apply bg-navy-900 text-white hover:bg-navy-800;
-  @apply shadow-ios hover:shadow-ios-lg;
+	@apply bg-navy-900 text-white hover:bg-navy-800;
+	@apply shadow-ios hover:shadow-ios-lg;
 }
 
 .btn-secondary {
-  @apply bg-white text-navy-900 border-2 border-navy-900;
-  @apply hover:bg-navy-50;
+	@apply bg-white text-navy-900 border-2 border-navy-900;
+	@apply hover:bg-navy-50;
 }
 
 /* Card styles */
 .card-ios {
-  @apply bg-white rounded-ios shadow-ios p-6;
-  @apply transition-all duration-300 hover:shadow-ios-lg;
+	@apply bg-white rounded-ios shadow-ios p-6;
+	@apply transition-all duration-300 hover:shadow-ios-lg;
 }
 
 /* Section spacing */
 .section-padding {
-  @apply py-20 px-4 sm:px-6 lg:px-8;
+	@apply py-20 px-4 sm:px-6 lg:px-8;
 }
 
+/* Desktop preview iframe scaling */
+.desktop-preview {
+	width: 1280px !important;
+	height: 720px !important;
+	transform-origin: top left !important;
+	border: none !important;
+}
+
+/* Responsive scaling for desktop preview - scales to fit container width */
+@media (max-width: 640px) {
+	.desktop-preview {
+		transform: scale(0.5) !important;
+	}
+}
+
+@media (min-width: 641px) and (max-width: 768px) {
+	.desktop-preview {
+		transform: scale(0.5) !important;
+	}
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+	.desktop-preview {
+		transform: scale(0.5) !important;
+	}
+}
+
+@media (min-width: 1025px) {
+	.desktop-preview {
+		transform: scale(0.5) !important;
+	}
+}
+
+/* Mobile performance optimizations */
+.touch-manipulation {
+	touch-action: manipulation;
+	-webkit-tap-highlight-color: transparent;
+}
+
+.touch-pan-y {
+	touch-action: pan-y pinch-zoom;
+}
+
+/* GPU acceleration for carousel */
+.will-change-transform {
+	will-change: transform;
+	backface-visibility: hidden;
+	perspective: 1000px;
+}

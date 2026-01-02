@@ -16,11 +16,10 @@ export default function Navigation() {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
           ? 'bg-white/95 backdrop-blur-md shadow-ios'
           : 'bg-transparent'
-      }`}
+        }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
@@ -37,6 +36,12 @@ export default function Navigation() {
               className="text-navy-700 hover:text-navy-900 font-medium transition-colors"
             >
               Services
+            </a>
+            <a
+              href="#portfolio"
+              className="text-navy-700 hover:text-navy-900 font-medium transition-colors"
+            >
+              Portfolio
             </a>
             <a
               href="#about"
@@ -91,6 +96,13 @@ export default function Navigation() {
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Services
+            </a>
+            <a
+              href="#portfolio"
+              className="block px-4 py-2 text-navy-700 hover:bg-navy-50 rounded-lg transition-colors"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Portfolio
             </a>
             <a
               href="#about"
