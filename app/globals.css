@@ -1,0 +1,56 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --navy: #0a1c2e;
+  --navy-light: #102a43;
+  --navy-lighter: #243b53;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #ffffff;
+  color: var(--navy);
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* iOS-like button styles */
+.btn-ios {
+  @apply px-6 py-3 rounded-ios font-medium transition-all duration-200;
+  @apply active:scale-95;
+}
+
+.btn-primary {
+  @apply bg-navy-900 text-white hover:bg-navy-800;
+  @apply shadow-ios hover:shadow-ios-lg;
+}
+
+.btn-secondary {
+  @apply bg-white text-navy-900 border-2 border-navy-900;
+  @apply hover:bg-navy-50;
+}
+
+/* Card styles */
+.card-ios {
+  @apply bg-white rounded-ios shadow-ios p-6;
+  @apply transition-all duration-300 hover:shadow-ios-lg;
+}
+
+/* Section spacing */
+.section-padding {
+  @apply py-20 px-4 sm:px-6 lg:px-8;
+}
+
