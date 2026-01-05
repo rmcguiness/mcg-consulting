@@ -1,17 +1,9 @@
 'use client';
 
-import { HiExternalLink, HiCode, HiShoppingBag, HiFire, HiChevronLeft, HiChevronRight } from 'react-icons/hi';
-import { useState, useEffect, useRef } from 'react';
+import { HiExternalLink, HiCode, HiShoppingBag, HiFire, HiChevronLeft, HiChevronRight, HiHome } from 'react-icons/hi';
+import { useState, useEffect, useRef, useCallback } from 'react';
 
 const portfolioItems = [
-  {
-    title: "NextPlayground",
-    description: "A cutting-edge Next.js playground featuring interactive examples, authentication with Supabase, and modern React patterns including Suspense and Promise-based modals.",
-    url: "https://next-playground-rcm.vercel.app/",
-    icon: HiCode,
-    category: "Web Development",
-    image: "next-playground",
-  },
   {
     title: "Pink Palm",
     description: "A modern food truck website for an Asian fusion restaurant, featuring a bold design, menu showcase, and event booking functionality.",
@@ -20,6 +12,23 @@ const portfolioItems = [
     category: "Food & Restaurant",
     image: "pink-palm",
   },
+  {
+    title: "McCaffery HVAC",
+    description: "HVAC company website featuring a modern design, contact form, and service information.",
+    url: "https://mccaffery-hvac.vercel.app/",
+    icon: HiHome,
+    category: "HVAC",
+    image: "mccaffery-hvac",
+  },
+  {
+    title: "NextPlayground",
+    description: "A cutting-edge Next.js playground featuring interactive examples, authentication with Supabase, and modern React patterns including Suspense and Promise-based modals.",
+    url: "https://next-playground-rcm.vercel.app/",
+    icon: HiCode,
+    category: "Web Development",
+    image: "next-playground",
+  },
+
   {
     title: "MKR Store",
     description: "A sleek e-commerce platform showcasing products with a modern design, shopping cart functionality, and best-selling products section.",
@@ -34,8 +43,12 @@ export default function Portfolio() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [loadedFrames, setLoadedFrames] = useState<Set<number>>(new Set());
   const [errorFrames, setErrorFrames] = useState<Set<number>>(new Set());
+  const [retryCounts, setRetryCounts] = useState<Map<number, number>>(new Map());
   const timeoutRefs = useRef<Map<number, NodeJS.Timeout>>(new Map());
   const statusRefs = useRef<Map<number, 'loading' | 'loaded' | 'error'>>(new Map());
+  const iframeRefs = useRef<Map<number, HTMLIFrameElement | null>>(new Map());
+  const handleIframeErrorRef = useRef<(index: number, shouldRetry: boolean) => void>();
+  const maxRetries = 3;
 
   // Touch/swipe handling
   const touchStartX = useRef<number | null>(null);
@@ -86,18 +99,147 @@ export default function Portfolio() {
       clearTimeout(timeout);
       timeoutRefs.current.delete(index);
     }
+
+    // Verify iframe actually loaded by checking if it has content
+    const iframe = iframeRefs.current.get(index);
+    if (iframe) {
+      try {
+        // Try to access iframe content to verify it loaded
+        // This will throw if blocked by CORS/X-Frame-Options
+        const iframeDoc = iframe.contentDocument || iframe.contentWindow?.document;
+        if (iframeDoc) {
+          statusRefs.current.set(index, 'loaded');
+          setLoadedFrames((prev) => new Set(prev).add(index));
+          setErrorFrames((prev) => {
+            const newSet = new Set(prev);
+            newSet.delete(index);
+            return newSet;
+          });
+          return;
+        }
+      } catch (e) {
+        // CORS/X-Frame-Options blocked - this is expected for cross-origin
+        // If we can't access the document, assume it loaded if onLoad fired
+        statusRefs.current.set(index, 'loaded');
+        setLoadedFrames((prev) => new Set(prev).add(index));
+        setErrorFrames((prev) => {
+          const newSet = new Set(prev);
+          newSet.delete(index);
+          return newSet;
+        });
+        return;
+      }
+    }
+
+    // Fallback: if onLoad fired, assume it's loaded
     statusRefs.current.set(index, 'loaded');
     setLoadedFrames((prev) => new Set(prev).add(index));
+    setErrorFrames((prev) => {
+      const newSet = new Set(prev);
+      newSet.delete(index);
+      return newSet;
+    });
   };
 
-  const handleIframeError = (index: number) => {
+  const handleIframeError = useCallback((index: number, shouldRetry: boolean = true) => {
     const timeout = timeoutRefs.current.get(index);
     if (timeout) {
       clearTimeout(timeout);
       timeoutRefs.current.delete(index);
     }
-    statusRefs.current.set(index, 'error');
-    setErrorFrames((prev) => new Set(prev).add(index));
+
+    const currentRetries = retryCounts.get(index) || 0;
+
+    if (shouldRetry && currentRetries < maxRetries) {
+      // Retry with exponential backoff
+      const delay = Math.min(1000 * Math.pow(2, currentRetries), 5000);
+      setRetryCounts((prev) => {
+        const newMap = new Map(prev);
+        newMap.set(index, currentRetries + 1);
+        return newMap;
+      });
+
+      setTimeout(() => {
+        const iframe = iframeRefs.current.get(index);
+        if (iframe) {
+          // Reset status and reload
+          statusRefs.current.set(index, 'loading');
+          setErrorFrames((prev) => {
+            const newSet = new Set(prev);
+            newSet.delete(index);
+            return newSet;
+          });
+          setLoadedFrames((prev) => {
+            const newSet = new Set(prev);
+            newSet.delete(index);
+            return newSet;
+          });
+
+          // Force reload by removing and re-adding src
+          const url = iframe.src;
+          iframe.src = '';
+          setTimeout(() => {
+            if (iframe) {
+              iframe.src = url;
+              // Set up new timeout
+              const newTimeout = setTimeout(() => {
+                if (statusRefs.current.get(index) === 'loading' && handleIframeErrorRef.current) {
+                  handleIframeErrorRef.current(index, false);
+                }
+              }, 10000);
+              timeoutRefs.current.set(index, newTimeout);
+            }
+          }, 100);
+        }
+      }, delay);
+    } else {
+      // Max retries reached or shouldRetry is false
+      statusRefs.current.set(index, 'error');
+      setErrorFrames((prev) => new Set(prev).add(index));
+    }
+  }, [retryCounts, maxRetries]);
+
+  // Store the latest version of handleIframeError in ref for recursive calls
+  handleIframeErrorRef.current = handleIframeError;
+
+  const retryIframeLoad = (index: number) => {
+    const iframe = iframeRefs.current.get(index);
+    if (iframe) {
+      // Reset retry count and error state
+      setRetryCounts((prev) => {
+        const newMap = new Map(prev);
+        newMap.set(index, 0);
+        return newMap;
+      });
+      setErrorFrames((prev) => {
+        const newSet = new Set(prev);
+        newSet.delete(index);
+        return newSet;
+      });
+      setLoadedFrames((prev) => {
+        const newSet = new Set(prev);
+        newSet.delete(index);
+        return newSet;
+      });
+
+      statusRefs.current.set(index, 'loading');
+
+      // Force reload
+      const url = iframe.src;
+      iframe.src = '';
+      setTimeout(() => {
+        if (iframe) {
+          iframe.src = url;
+          // Set up timeout
+          const timeout = setTimeout(() => {
+            if (statusRefs.current.get(index) === 'loading' && handleIframeErrorRef.current) {
+              handleIframeErrorRef.current(index, false);
+            }
+          }, 10000);
+          timeoutRefs.current.set(index, timeout);
+        }
+      }, 100);
+    }
   };
 
   useEffect(() => {
@@ -106,26 +248,47 @@ export default function Portfolio() {
       statusRefs.current.set(index, 'loading');
     });
 
-    // Set up timeouts for each iframe (15 seconds)
+    // Set up timeouts for each iframe (10 seconds, shorter for faster feedback)
     portfolioItems.forEach((_, index) => {
       const timeout = setTimeout(() => {
         const status = statusRefs.current.get(index);
-        if (status === 'loading') {
-          handleIframeError(index);
+        if (status === 'loading' && handleIframeErrorRef.current) {
+          handleIframeErrorRef.current(index, true);
         }
-      }, 15000);
+      }, 10000);
       timeoutRefs.current.set(index, timeout);
     });
 
     // Cleanup timeouts on unmount
     const timeouts = timeoutRefs.current;
     const statuses = statusRefs.current;
+    const iframes = iframeRefs.current;
     return () => {
       timeouts.forEach((timeout) => clearTimeout(timeout));
       timeouts.clear();
       statuses.clear();
+      iframes.clear();
     };
   }, []);
+
+  // Preload adjacent iframes when current index changes
+  useEffect(() => {
+    const indicesToPreload = [
+      currentIndex,
+      (currentIndex + 1) % portfolioItems.length,
+      (currentIndex - 1 + portfolioItems.length) % portfolioItems.length,
+    ];
+
+    indicesToPreload.forEach((index) => {
+      const iframe = iframeRefs.current.get(index);
+      const status = statusRefs.current.get(index);
+
+      // If iframe exists but hasn't loaded and isn't in error state, ensure it's loading
+      if (iframe && status === 'loading' && !iframe.src) {
+        iframe.src = portfolioItems[index].url;
+      }
+    });
+  }, [currentIndex]);
 
   return (
     <section id="portfolio" className="section-padding bg-gradient-to-br from-white to-navy-50">
@@ -216,31 +379,45 @@ export default function Portfolio() {
                                 <HiExternalLink className="w-8 h-8 text-navy-600" />
                               </div>
                               <p className="text-sm text-navy-600 mb-2">Preview unavailable</p>
-                              <a
-                                href={item.url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-sm text-navy-900 font-medium hover:underline"
-                              >
-                                Visit site directly →
-                              </a>
+                              <div className="flex flex-col gap-2 items-center">
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    retryIframeLoad(index);
+                                  }}
+                                  className="text-sm text-navy-900 font-medium hover:underline px-3 py-1 rounded-md hover:bg-navy-50 transition-colors"
+                                >
+                                  Retry loading
+                                </button>
+                                <a
+                                  href={item.url}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-sm text-navy-500 hover:text-navy-900 font-medium hover:underline"
+                                >
+                                  Visit site directly →
+                                </a>
+                              </div>
                             </div>
                           </div>
                         )}
-                        {!hasError && (
-                          <div className="w-full h-full relative" style={{ overflow: 'hidden' }}>
-                            <iframe
-                              src={item.url}
-                              className={`desktop-preview ${isLoaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300`}
-                              onLoad={() => handleIframeLoad(index)}
-                              onError={() => handleIframeError(index)}
-                              title={`${item.title} preview`}
-                              loading="eager"
-                              sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-presentation"
-                              style={{ pointerEvents: 'none' }}
-                            />
-                          </div>
-                        )}
+                        <div className="w-full h-full relative" style={{ overflow: 'hidden' }}>
+                          <iframe
+                            ref={(el) => {
+                              if (el) {
+                                iframeRefs.current.set(index, el);
+                              }
+                            }}
+                            src={item.url}
+                            className={`desktop-preview ${isLoaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300`}
+                            onLoad={() => handleIframeLoad(index)}
+                            onError={() => handleIframeError(index, true)}
+                            title={`${item.title} preview`}
+                            loading={index === currentIndex || index === currentIndex - 1 || index === currentIndex + 1 ? "eager" : "lazy"}
+                            sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-presentation"
+                            style={{ pointerEvents: 'none' }}
+                          />
+                        </div>
                       </div>
 
 

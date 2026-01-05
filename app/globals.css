@@ -64,21 +64,31 @@ html {
 }
 
 /* Responsive scaling for desktop preview - scales to fit container width */
-@media (max-width: 640px) {
+@media (max-width: 340px) {
 	.desktop-preview {
-		transform: scale(0.5) !important;
+		transform: scale(0.11) !important;
 	}
 }
 
-@media (min-width: 641px) and (max-width: 768px) {
+@media (min-width: 341px) and (max-width: 425px) {
 	.desktop-preview {
-		transform: scale(0.5) !important;
+		transform: scale(0.18) !important;
 	}
 }
 
-@media (min-width: 769px) and (max-width: 1024px) {
+@media (min-width: 426px) and (max-width: 518px) {
 	.desktop-preview {
-		transform: scale(0.5) !important;
+		transform: scale(0.25) !important;
+	}
+}
+@media (min-width: 519px) and (max-width: 715px) {
+	.desktop-preview {
+		transform: scale(0.35) !important;
+	}
+}
+@media (min-width: 716px) and (max-width: 1024px) {
+	.desktop-preview {
+		transform: scale(0.49) !important;
 	}
 }
 

@@ -17,8 +17,8 @@ export default function Navigation() {
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
-          ? 'bg-white/95 backdrop-blur-md shadow-ios'
-          : 'bg-transparent'
+        ? 'bg-white/95 backdrop-blur-md shadow-ios'
+        : 'bg-transparent'
         }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -89,7 +89,7 @@ export default function Navigation() {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden pb-4 space-y-3">
+          <div className="md:hidden pb-4 space-y-3 bg-white">
             <a
               href="#services"
               className="block px-4 py-2 text-navy-700 hover:bg-navy-50 rounded-lg transition-colors"
