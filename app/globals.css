@@ -57,7 +57,7 @@ html {
 
 /* Desktop preview iframe scaling */
 .desktop-preview {
-	width: 1280px !important;
+	width: 1250px !important;
 	height: 720px !important;
 	transform-origin: top left !important;
 	border: none !important;

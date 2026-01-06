@@ -1,4 +1,6 @@
-import { HiCode, HiColorSwatch, HiChartBar, HiLightBulb, HiLightningBolt, HiCog } from 'react-icons/hi';
+import { HiCode, HiColorSwatch, HiChartBar, HiLightBulb, HiLightningBolt, HiCog, HiArrowRight } from 'react-icons/hi';
+import Link from 'next/link';
+import { HiArrowUpRight } from 'react-icons/hi2';
 
 const services = [
   {
@@ -33,14 +35,28 @@ const services = [
   },
 ];
 
-export default function Services() {
+interface ServicesProps {
+  showViewMore?: boolean;
+}
+
+export default function Services({ showViewMore = false }: ServicesProps) {
   return (
     <section id="services" className="section-padding bg-white">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-4xl sm:text-5xl font-bold text-navy-900 mb-4">
-            Our Services
-          </h2>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-4">
+            <h2 className="text-4xl sm:text-5xl font-bold text-navy-900">
+              Our Services
+            </h2>
+            {showViewMore && (
+              <Link
+                href="/services"
+                className="btn-ios btn-white border-2 border-navy-900 flex items-center gap-2 whitespace-nowrap"
+              >
+                <HiArrowUpRight className="w-4 h-4" />
+              </Link>
+            )}
+          </div>
           <p className="text-xl text-navy-600 max-w-2xl mx-auto">
             Comprehensive solutions tailored to your business needs
           </p>
@@ -68,7 +84,7 @@ export default function Services() {
           })}
         </div>
       </div>
-    </section>
+    </section >
   );
 }
 

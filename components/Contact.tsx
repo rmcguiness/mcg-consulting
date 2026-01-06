@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { HiPhone } from 'react-icons/hi';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -57,7 +58,7 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="section-padding bg-white">
+    <section id="contact" className="section-padding bg-gradient-to-br from-navy-50 to-white">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-4xl sm:text-5xl font-bold text-navy-900 mb-4">
@@ -67,7 +68,16 @@ export default function Contact() {
             Ready to start your project? Let&apos;s discuss how we can help.
           </p>
         </div>
-
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-4">
+          <a href="tel:(732) 675-8146" className="btn-ios btn-primary text-lg px-8 py-4">Call Us <span className="hidden sm:inline text-md">: (732) 675-8146</span></a>
+        </div>
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 py-8">
+          <hr className="w-full border-1 border-navy-200" />
+          <p className="text-xl no-wrap text-navy-600 max-w-2xl mx-auto text-center">
+            Or
+          </p>
+          <hr className="w-full border-1 border-navy-200" />
+        </div>
         <div className="card-ios">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>

@@ -1,14 +1,31 @@
 import { HiSparkles } from 'react-icons/hi';
+import Link from 'next/link';
+import { HiArrowUpRight } from 'react-icons/hi2';
 
-export default function About() {
+interface AboutProps {
+  showViewMore?: boolean;
+}
+
+export default function About({ showViewMore = false }: AboutProps) {
   return (
-    <section id="about" className="section-padding bg-gradient-to-br from-navy-50 to-white">
+    <section id="about" className="section-padding my-20 bg-white">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div>
-            <h2 className="text-4xl sm:text-5xl font-bold text-navy-900 mb-6">
-              About MCG Consulting
-            </h2>
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-6">
+              <h2 className="text-4xl sm:text-5xl font-bold text-navy-900">
+                About MCG Consulting
+              </h2>
+              {showViewMore && (
+                <Link
+                  href="/about"
+                  className="btn-ios btn-white border-2 border-navy-900 flex items-center gap-2 whitespace-nowrap"
+                >
+
+                  <HiArrowUpRight className="w-4 h-4" />
+                </Link>
+              )}
+            </div>
             <p className="text-lg text-navy-600 mb-4 leading-relaxed">
               We&apos;re a team of passionate developers and designers dedicated to
               creating exceptional digital experiences. With years of experience

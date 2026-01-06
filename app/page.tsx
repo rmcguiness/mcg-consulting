@@ -11,9 +11,9 @@ export default function Home() {
     <main className="min-h-screen bg-white">
       <Navigation />
       <Hero />
-      <Services />
-      <Portfolio />
-      <About />
+      <Services showViewMore />
+      <Portfolio showViewMore />
+      <About showViewMore />
       <Contact />
       <Footer />
     </main>
