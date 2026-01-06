@@ -51,13 +51,13 @@ export default function Navigation() {
               About
             </Link>
             <a
-              href="#contact"
+              href="/#contact"
               className="text-navy-700 hover:text-navy-900 font-medium transition-colors"
             >
               Contact
             </a>
             <a
-              href="#contact"
+              href="/#contact"
               className="btn-ios btn-primary"
             >
               Get Started
