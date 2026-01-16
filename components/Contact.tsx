@@ -35,6 +35,13 @@ export default function Contact() {
         throw new Error(data.error || 'Failed to send message');
       }
 
+      // Fire conversion event
+      if (typeof window !== 'undefined' && window.gtag) {
+        window.gtag('event', 'conversion', {
+          'send_to': 'AW-17854144169/DpGWCPf30OYbEKm9wsFC'
+        });
+      }
+
       setSubmitStatus({
         type: 'success',
         message: 'Thank you for your message! We\'ll get back to you soon.',
