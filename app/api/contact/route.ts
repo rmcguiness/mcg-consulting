@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
 
 		// Send email using Resend
 		const { data, error } = await resend.emails.send({
-			from: 'noreply@mcgconsulting.com', // You'll need to verify your domain with Resend
+			from: 'Contact Form <onboarding@resend.dev>', // You'll need to verify your domain with Resend
 			to: ['ryanmcguiness123@gmail.com'],
 			subject: `MCG Consulting Form Submission from ${name}`,
 			html: `
