@@ -341,12 +341,12 @@ export default function Portfolio({ showViewMore = false }: PortfolioProps) {
         </div>
 
         {showViewMore ? (
-          // Carousel view for home page
-          <div className="relative px-12 sm:px-16 md:px-20 lg:px-24">
+          // Carousel view for home page with Rolodex effect
+          <div className="relative px-4 sm:px-8 md:px-12 lg:px-16">
             {/* Navigation Arrows */}
             <button
               onClick={prevSlide}
-              className="absolute left-0 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full bg-white/95 backdrop-blur-sm shadow-ios hover:shadow-ios-lg active:scale-95 flex items-center justify-center text-navy-900 hover:bg-navy-50 transition-all duration-200 group touch-manipulation"
+              className="absolute left-0 top-1/2 -translate-y-1/2 z-30 w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full bg-white/95 backdrop-blur-sm shadow-ios hover:shadow-ios-lg active:scale-95 flex items-center justify-center text-navy-900 hover:bg-navy-50 transition-all duration-200 group touch-manipulation"
               aria-label="Previous portfolio item"
             >
               <HiChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 group-hover:scale-110 transition-transform" />
@@ -354,41 +354,64 @@ export default function Portfolio({ showViewMore = false }: PortfolioProps) {
 
             <button
               onClick={nextSlide}
-              className="absolute right-0 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full bg-white/95 backdrop-blur-sm shadow-ios hover:shadow-ios-lg active:scale-95 flex items-center justify-center text-navy-900 hover:bg-navy-50 transition-all duration-200 group touch-manipulation"
+              className="absolute right-0 top-1/2 -translate-y-1/2 z-30 w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full bg-white/95 backdrop-blur-sm shadow-ios hover:shadow-ios-lg active:scale-95 flex items-center justify-center text-navy-900 hover:bg-navy-50 transition-all duration-200 group touch-manipulation"
               aria-label="Next portfolio item"
             >
               <HiChevronRight className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 group-hover:scale-110 transition-transform" />
             </button>
 
-            {/* Carousel Container */}
+            {/* Carousel Container - Rolodex style */}
             <div
               ref={carouselRef}
-              className="overflow-hidden"
+              className="relative h-[600px] sm:h-[650px] md:h-[700px] lg:h-[750px]"
+              style={{ perspective: '2000px' }}
               onTouchStart={onTouchStart}
               onTouchMove={onTouchMove}
               onTouchEnd={onTouchEnd}
             >
-              <div
-                className="flex transition-transform duration-300 ease-out will-change-transform"
-                style={{
-                  transform: `translate3d(-${currentIndex * 100}%, 0, 0)`,
-                  WebkitTransform: `translate3d(-${currentIndex * 100}%, 0, 0)`,
-                }}
-              >
-                {portfolioItems.map((item, index) => {
-                  const IconComponent = item.icon;
-                  const isLoaded = loadedFrames.has(index);
-                  const hasError = errorFrames.has(index);
-                  return (
-                    <div
-                      key={index}
-                      className="w-full flex-shrink-0 px-3 sm:px-6 md:px-8 py-4"
-                    >
-                      <div className="card-ios h-full hover:shadow-ios group cursor-pointer transition-all duration-300 max-w-full sm:max-w-2xl mx-auto touch-manipulation w-full overflow-hidden">
+              {portfolioItems.map((item, index) => {
+                const IconComponent = item.icon;
+                const isLoaded = loadedFrames.has(index);
+                const hasError = errorFrames.has(index);
+                
+                // Calculate position relative to current index
+                const offset = index - currentIndex;
+                const absOffset = Math.abs(offset);
+                
+                // Only render cards within ±2 positions of current
+                if (absOffset > 2) return null;
+                
+                // Calculate transforms for Rolodex effect
+                const isActive = offset === 0;
+                const translateX = offset * 45; // Percentage shift
+                const translateZ = isActive ? 0 : -150 - (absOffset * 50); // Depth
+                const scale = isActive ? 1 : 0.85 - (absOffset * 0.1);
+                const opacity = isActive ? 1 : 0.4 - (absOffset * 0.15);
+                const rotateY = offset * 8; // Slight rotation for depth
+                const zIndex = 10 - absOffset;
+
+                return (
+                  <div
+                    key={index}
+                    className="absolute inset-0 transition-all duration-500 ease-out"
+                    style={{
+                      transform: `translateX(${translateX}%) translateZ(${translateZ}px) scale(${scale}) rotateY(${rotateY}deg)`,
+                      opacity: opacity,
+                      zIndex: zIndex,
+                      pointerEvents: isActive ? 'auto' : 'none',
+                    }}
+                    onClick={() => {
+                      if (!isActive && absOffset === 1) {
+                        setCurrentIndex(index);
+                      }
+                    }}
+                  >
+                    <div className="h-full flex items-center justify-center px-4 sm:px-8 md:px-12">
+                      <div className={`card-ios h-auto hover:shadow-ios ${isActive ? 'cursor-default' : 'cursor-pointer'} transition-all duration-300 max-w-full sm:max-w-xl md:max-w-2xl lg:max-w-3xl mx-auto touch-manipulation w-full`}>
                         <div className="mb-4 flex items-center justify-between">
                           <div className="flex items-center gap-3">
-                            <IconComponent className="w-10 h-10 text-navy-900 transform transition-transform duration-300" />
-                            <span className="hidden sm:flex text-sm font-medium text-navy-600 bg-navy-50 px-3 py-1 rounded-full">
+                            <IconComponent className="w-8 h-8 sm:w-10 sm:h-10 text-navy-900 transform transition-transform duration-300" />
+                            <span className="hidden sm:flex text-xs sm:text-sm font-medium text-navy-600 bg-navy-50 px-2 sm:px-3 py-1 rounded-full">
                               {item.category}
                             </span>
                           </div>
@@ -396,99 +419,105 @@ export default function Portfolio({ showViewMore = false }: PortfolioProps) {
                             href={item.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            onClick={(e) => e.stopPropagation()}
-                            className="text-navy-400 hover:text-navy-900 transition-colors"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              if (!isActive) e.preventDefault();
+                            }}
+                            className={`text-navy-400 hover:text-navy-900 transition-colors ${!isActive ? 'pointer-events-none' : ''}`}
                           >
-                            <HiExternalLink className="w-5 h-5" />
+                            <HiExternalLink className="w-4 h-4 sm:w-5 sm:h-5" />
                           </a>
                         </div>
 
-                        <div className="aspect-video bg-gradient-to-br from-navy-100 to-navy-200 rounded-ios mb-4 overflow-hidden relative border border-navy-200">
+                        <div className="preview-container bg-gradient-to-br from-navy-100 to-navy-200 rounded-ios mb-4 border border-navy-200">
                           {!isLoaded && !hasError && (
-                            <div className="absolute inset-0 flex items-center justify-center z-10 bg-white/90">
+                            <div className="absolute inset-0 flex items-center justify-center z-10 bg-white/90 rounded-ios">
                               <div className="text-center">
-                                <div className="w-12 h-12 border-4 border-navy-300 border-t-navy-900 rounded-full animate-spin mx-auto mb-2"></div>
-                                <p className="text-sm text-navy-600">Loading preview...</p>
+                                <div className="w-10 h-10 sm:w-12 sm:h-12 border-4 border-navy-300 border-t-navy-900 rounded-full animate-spin mx-auto mb-2"></div>
+                                <p className="text-xs sm:text-sm text-navy-600">Loading preview...</p>
                               </div>
                             </div>
                           )}
                           {hasError && (
-                            <div className="absolute inset-0 flex items-center justify-center z-10 bg-white/90">
-                              <div className="text-center p-4">
-                                <div className="w-16 h-16 bg-navy-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                                  <HiExternalLink className="w-8 h-8 text-navy-600" />
+                            <div className="absolute inset-0 flex items-center justify-center z-10 bg-white/90 rounded-ios">
+                              <div className="text-center p-3 sm:p-4">
+                                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-navy-100 rounded-full flex items-center justify-center mx-auto mb-2 sm:mb-3">
+                                  <HiExternalLink className="w-6 h-6 sm:w-8 sm:h-8 text-navy-600" />
                                 </div>
-                                <p className="text-sm text-navy-600 mb-2">Preview unavailable</p>
-                                <div className="flex flex-col gap-2 items-center">
-                                  <button
-                                    onClick={(e) => {
-                                      e.stopPropagation();
-                                      retryIframeLoad(index);
-                                    }}
-                                    className="text-sm text-navy-900 font-medium hover:underline px-3 py-1 rounded-md hover:bg-navy-50 transition-colors"
-                                  >
-                                    Retry loading
-                                  </button>
-                                  <a
-                                    href={item.url}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="text-sm text-navy-500 hover:text-navy-900 font-medium hover:underline"
-                                  >
-                                    Visit site directly →
-                                  </a>
-                                </div>
+                                <p className="text-xs sm:text-sm text-navy-600 mb-2">Preview unavailable</p>
+                                {isActive && (
+                                  <div className="flex flex-col gap-2 items-center">
+                                    <button
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        retryIframeLoad(index);
+                                      }}
+                                      className="text-xs sm:text-sm text-navy-900 font-medium hover:underline px-2 sm:px-3 py-1 rounded-md hover:bg-navy-50 transition-colors"
+                                    >
+                                      Retry loading
+                                    </button>
+                                    <a
+                                      href={item.url}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="text-xs sm:text-sm text-navy-500 hover:text-navy-900 font-medium hover:underline"
+                                    >
+                                      Visit site directly →
+                                    </a>
+                                  </div>
+                                )}
                               </div>
                             </div>
                           )}
-                          <div className="w-full h-full relative" style={{ overflow: 'hidden' }}>
-                            <iframe
-                              ref={(el) => {
-                                if (el) {
-                                  iframeRefs.current.set(index, el);
-                                }
-                              }}
-                              src={item.url}
-                              className={`desktop-preview ${isLoaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300`}
-                              onLoad={() => handleIframeLoad(index)}
-                              onError={() => handleIframeError(index, true)}
-                              title={`${item.title} preview`}
-                              loading={index === currentIndex || index === currentIndex - 1 || index === currentIndex + 1 ? "eager" : "lazy"}
-                              sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-presentation"
-                              style={{ pointerEvents: 'none' }}
-                            />
-                          </div>
+                          <iframe
+                            ref={(el) => {
+                              if (el) {
+                                iframeRefs.current.set(index, el);
+                              }
+                            }}
+                            src={item.url}
+                            className={`desktop-preview ${isLoaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300`}
+                            onLoad={() => handleIframeLoad(index)}
+                            onError={() => handleIframeError(index, true)}
+                            title={`${item.title} preview`}
+                            loading={absOffset <= 1 ? "eager" : "lazy"}
+                            sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-presentation"
+                            style={{ pointerEvents: 'none' }}
+                          />
                         </div>
 
-                        <h3 className="text-xl font-bold text-navy-900 mb-2">
+                        <h3 className="text-lg sm:text-xl font-bold text-navy-900 mb-2">
                           {item.title}
                         </h3>
-                        <div className='mb-1'>
-                          <span className="sm:hidden text-sm font-medium text-navy-600 bg-navy-50 px-2 py-1 rounded-full">
+                        <div className='mb-1 sm:hidden'>
+                          <span className="text-xs font-medium text-navy-600 bg-navy-50 px-2 py-1 rounded-full">
                             {item.category}
                           </span>
                         </div>
 
-                        <p className="text-navy-600 leading-relaxed text-sm">
+                        <p className="text-navy-600 leading-relaxed text-xs sm:text-sm">
                           {item.description}
                         </p>
 
-                        <div className="mt-4 pt-4 border-t border-navy-100">
+                        <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-navy-100">
                           <a
                             href={item.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-sm text-navy-500 group-hover:text-navy-900 transition-colors flex items-center gap-2"
+                            onClick={(e) => {
+                              if (!isActive) e.preventDefault();
+                            }}
+                            className={`text-xs sm:text-sm text-navy-500 hover:text-navy-900 transition-colors flex items-center gap-2 ${!isActive ? 'pointer-events-none' : ''}`}
                           >
                             Visit Site
-                            <HiExternalLink className="w-4 h-4" />
+                            <HiExternalLink className="w-3 h-3 sm:w-4 sm:h-4" />
                           </a>
                         </div>
                       </div>
                     </div>
-                  );
-                })}
-              </div>
+                  </div>
+                );
+              })}
             </div>
 
             {/* Carousel Indicators */}
@@ -533,9 +562,9 @@ export default function Portfolio({ showViewMore = false }: PortfolioProps) {
                     </a>
                   </div>
 
-                  <div className="aspect-video bg-gradient-to-br from-navy-100 to-navy-200 rounded-ios mb-4 overflow-hidden relative border border-navy-200">
+                  <div className="preview-container bg-gradient-to-br from-navy-100 to-navy-200 rounded-ios mb-4 border border-navy-200">
                     {!isLoaded && !hasError && (
-                      <div className="absolute inset-0 flex items-center justify-center z-10 bg-white/90">
+                      <div className="absolute inset-0 flex items-center justify-center z-10 bg-white/90 rounded-ios">
                         <div className="text-center">
                           <div className="w-12 h-12 border-4 border-navy-300 border-t-navy-900 rounded-full animate-spin mx-auto mb-2"></div>
                           <p className="text-sm text-navy-600">Loading preview...</p>
@@ -543,7 +572,7 @@ export default function Portfolio({ showViewMore = false }: PortfolioProps) {
                       </div>
                     )}
                     {hasError && (
-                      <div className="absolute inset-0 flex items-center justify-center z-10 bg-white/90">
+                      <div className="absolute inset-0 flex items-center justify-center z-10 bg-white/90 rounded-ios">
                         <div className="text-center p-4">
                           <div className="w-16 h-16 bg-navy-100 rounded-full flex items-center justify-center mx-auto mb-3">
                             <HiExternalLink className="w-8 h-8 text-navy-600" />
@@ -571,23 +600,21 @@ export default function Portfolio({ showViewMore = false }: PortfolioProps) {
                         </div>
                       </div>
                     )}
-                    <div className="w-full h-full relative" style={{ overflow: 'hidden' }}>
-                      <iframe
-                        ref={(el) => {
-                          if (el) {
-                            iframeRefs.current.set(index, el);
-                          }
-                        }}
-                        src={item.url}
-                        className={`desktop-preview ${isLoaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300`}
-                        onLoad={() => handleIframeLoad(index)}
-                        onError={() => handleIframeError(index, true)}
-                        title={`${item.title} preview`}
-                        loading="lazy"
-                        sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-presentation"
-                        style={{ pointerEvents: 'none' }}
-                      />
-                    </div>
+                    <iframe
+                      ref={(el) => {
+                        if (el) {
+                          iframeRefs.current.set(index, el);
+                        }
+                      }}
+                      src={item.url}
+                      className={`desktop-preview ${isLoaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300`}
+                      onLoad={() => handleIframeLoad(index)}
+                      onError={() => handleIframeError(index, true)}
+                      title={`${item.title} preview`}
+                      loading="lazy"
+                      sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-presentation"
+                      style={{ pointerEvents: 'none' }}
+                    />
                   </div>
 
                   <h3 className="text-xl font-bold text-navy-900 mb-2">

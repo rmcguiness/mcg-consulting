@@ -57,44 +57,75 @@ html {
 
 /* Desktop preview iframe scaling */
 .desktop-preview {
-	width: 1250px !important;
-	height: 720px !important;
-	transform-origin: top left !important;
-	border: none !important;
+	width: 1280px;
+	height: 720px;
+	transform-origin: top left;
+	border: none;
+	position: absolute;
+	top: 0;
+	left: 0;
 }
 
-/* Responsive scaling for desktop preview - scales to fit container width */
+/* Container maintains 16:9 aspect ratio and scales iframe to fit */
+.preview-container {
+	position: relative;
+	width: 100%;
+	padding-bottom: 56.25%; /* 16:9 aspect ratio */
+	overflow: hidden;
+}
+
+.preview-container .desktop-preview {
+	/* Calculate scale to fit container width while maintaining aspect */
+	/* Container width / 1280px = scale factor */
+	transform: scale(var(--preview-scale, 1));
+}
+
+/* Responsive scaling breakpoints - smoother transitions */
 @media (max-width: 340px) {
-	.desktop-preview {
-		transform: scale(0.11) !important;
+	:root {
+		--preview-scale: 0.24; /* ~307px container */
 	}
 }
 
 @media (min-width: 341px) and (max-width: 425px) {
-	.desktop-preview {
-		transform: scale(0.18) !important;
+	:root {
+		--preview-scale: 0.28; /* ~358px container */
 	}
 }
 
 @media (min-width: 426px) and (max-width: 518px) {
-	.desktop-preview {
-		transform: scale(0.25) !important;
-	}
-}
-@media (min-width: 519px) and (max-width: 715px) {
-	.desktop-preview {
-		transform: scale(0.35) !important;
-	}
-}
-@media (min-width: 716px) and (max-width: 1024px) {
-	.desktop-preview {
-		transform: scale(0.49) !important;
+	:root {
+		--preview-scale: 0.33; /* ~422px container */
 	}
 }
 
-@media (min-width: 1025px) {
-	.desktop-preview {
-		transform: scale(0.5) !important;
+@media (min-width: 519px) and (max-width: 640px) {
+	:root {
+		--preview-scale: 0.40; /* ~512px container */
+	}
+}
+
+@media (min-width: 641px) and (max-width: 768px) {
+	:root {
+		--preview-scale: 0.48; /* ~614px container */
+	}
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+	:root {
+		--preview-scale: 0.56; /* ~717px container */
+	}
+}
+
+@media (min-width: 1025px) and (max-width: 1280px) {
+	:root {
+		--preview-scale: 0.65; /* ~832px container */
+	}
+}
+
+@media (min-width: 1281px) {
+	:root {
+		--preview-scale: 0.75; /* ~960px container */
 	}
 }
 
