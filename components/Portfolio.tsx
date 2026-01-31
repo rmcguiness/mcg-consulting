@@ -1,14 +1,23 @@
-'use client';
+"use client";
 
-import { HiExternalLink, HiCode, HiShoppingBag, HiFire, HiChevronLeft, HiChevronRight, HiHome, HiArrowRight } from 'react-icons/hi';
-import { useState, useEffect, useRef, useCallback } from 'react';
-import Link from 'next/link';
-import { HiArrowUpRight } from 'react-icons/hi2';
+import {
+  HiExternalLink,
+  HiCode,
+  HiShoppingBag,
+  HiFire,
+  HiChevronLeft,
+  HiChevronRight,
+  HiHome,
+} from "react-icons/hi";
+import { useState, useEffect, useRef, useCallback } from "react";
+import Link from "next/link";
+import { HiArrowUpRight } from "react-icons/hi2";
 
 const portfolioItems = [
   {
     title: "Costal Buns",
-    description: "A modern food truck website for an Asian fusion restaurant, featuring a bold design, menu showcase, and event booking functionality.",
+    description:
+      "A modern food truck website for an Asian fusion restaurant, featuring a bold design, menu showcase, and event booking functionality.",
     url: "https://pink-palm.shop/",
     icon: HiFire,
     category: "Food & Restaurant",
@@ -16,7 +25,8 @@ const portfolioItems = [
   },
   {
     title: "Country Farms",
-    description: "A modern convenience store website for a local grocery store, featuring a bold design, store showcase, and seo optimization.",
+    description:
+      "A modern convenience store website for a local grocery store, featuring a bold design, store showcase, and seo optimization.",
     url: "https://country-farms-convenience.vercel.app/",
     icon: HiShoppingBag,
     category: "Convenience Store",
@@ -24,7 +34,8 @@ const portfolioItems = [
   },
   {
     title: "McCaffery HVAC",
-    description: "HVAC company website featuring a modern design, contact form, and service information.",
+    description:
+      "HVAC company website featuring a modern design, contact form, and service information.",
     url: "https://mccaffery-hvac.vercel.app/",
     icon: HiHome,
     category: "HVAC",
@@ -32,7 +43,8 @@ const portfolioItems = [
   },
   {
     title: "NextPlayground",
-    description: "A cutting-edge Next.js playground featuring interactive examples, authentication with Supabase, and modern React patterns including Suspense and Promise-based modals.",
+    description:
+      "A cutting-edge Next.js playground featuring interactive examples, authentication with Supabase, and modern React patterns including Suspense and Promise-based modals.",
     url: "https://next-playground-rcm.vercel.app/",
     icon: HiCode,
     category: "Web Development",
@@ -41,7 +53,8 @@ const portfolioItems = [
 
   {
     title: "MKR Store",
-    description: "A sleek e-commerce platform showcasing products with a modern design, shopping cart functionality, and best-selling products section.",
+    description:
+      "A sleek e-commerce platform showcasing products with a modern design, shopping cart functionality, and best-selling products section.",
     url: "https://mkr-ecommerce.vercel.app/",
     icon: HiShoppingBag,
     category: "E-Commerce",
@@ -57,11 +70,16 @@ export default function Portfolio({ showViewMore = false }: PortfolioProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [loadedFrames, setLoadedFrames] = useState<Set<number>>(new Set());
   const [errorFrames, setErrorFrames] = useState<Set<number>>(new Set());
-  const [retryCounts, setRetryCounts] = useState<Map<number, number>>(new Map());
+  const [retryCounts, setRetryCounts] = useState<Map<number, number>>(
+    new Map(),
+  );
   const timeoutRefs = useRef<Map<number, NodeJS.Timeout>>(new Map());
-  const statusRefs = useRef<Map<number, 'loading' | 'loaded' | 'error'>>(new Map());
+  const statusRefs = useRef<Map<number, "loading" | "loaded" | "error">>(
+    new Map(),
+  );
   const iframeRefs = useRef<Map<number, HTMLIFrameElement | null>>(new Map());
-  const handleIframeErrorRef = useRef<(index: number, shouldRetry: boolean) => void>();
+  const handleIframeErrorRef =
+    useRef<(index: number, shouldRetry: boolean) => void>();
   const maxRetries = 3;
 
   // Touch/swipe handling
@@ -74,7 +92,9 @@ export default function Portfolio({ showViewMore = false }: PortfolioProps) {
   };
 
   const prevSlide = () => {
-    setCurrentIndex((prev) => (prev - 1 + portfolioItems.length) % portfolioItems.length);
+    setCurrentIndex(
+      (prev) => (prev - 1 + portfolioItems.length) % portfolioItems.length,
+    );
   };
 
   const minSwipeDistance = 50;
@@ -120,9 +140,10 @@ export default function Portfolio({ showViewMore = false }: PortfolioProps) {
       try {
         // Try to access iframe content to verify it loaded
         // This will throw if blocked by CORS/X-Frame-Options
-        const iframeDoc = iframe.contentDocument || iframe.contentWindow?.document;
+        const iframeDoc =
+          iframe.contentDocument || iframe.contentWindow?.document;
         if (iframeDoc) {
-          statusRefs.current.set(index, 'loaded');
+          statusRefs.current.set(index, "loaded");
           setLoadedFrames((prev) => new Set(prev).add(index));
           setErrorFrames((prev) => {
             const newSet = new Set(prev);
@@ -134,7 +155,7 @@ export default function Portfolio({ showViewMore = false }: PortfolioProps) {
       } catch (e) {
         // CORS/X-Frame-Options blocked - this is expected for cross-origin
         // If we can't access the document, assume it loaded if onLoad fired
-        statusRefs.current.set(index, 'loaded');
+        statusRefs.current.set(index, "loaded");
         setLoadedFrames((prev) => new Set(prev).add(index));
         setErrorFrames((prev) => {
           const newSet = new Set(prev);
@@ -146,7 +167,7 @@ export default function Portfolio({ showViewMore = false }: PortfolioProps) {
     }
 
     // Fallback: if onLoad fired, assume it's loaded
-    statusRefs.current.set(index, 'loaded');
+    statusRefs.current.set(index, "loaded");
     setLoadedFrames((prev) => new Set(prev).add(index));
     setErrorFrames((prev) => {
       const newSet = new Set(prev);
@@ -155,63 +176,69 @@ export default function Portfolio({ showViewMore = false }: PortfolioProps) {
     });
   };
 
-  const handleIframeError = useCallback((index: number, shouldRetry: boolean = true) => {
-    const timeout = timeoutRefs.current.get(index);
-    if (timeout) {
-      clearTimeout(timeout);
-      timeoutRefs.current.delete(index);
-    }
+  const handleIframeError = useCallback(
+    (index: number, shouldRetry: boolean = true) => {
+      const timeout = timeoutRefs.current.get(index);
+      if (timeout) {
+        clearTimeout(timeout);
+        timeoutRefs.current.delete(index);
+      }
 
-    const currentRetries = retryCounts.get(index) || 0;
+      const currentRetries = retryCounts.get(index) || 0;
 
-    if (shouldRetry && currentRetries < maxRetries) {
-      // Retry with exponential backoff
-      const delay = Math.min(1000 * Math.pow(2, currentRetries), 5000);
-      setRetryCounts((prev) => {
-        const newMap = new Map(prev);
-        newMap.set(index, currentRetries + 1);
-        return newMap;
-      });
+      if (shouldRetry && currentRetries < maxRetries) {
+        // Retry with exponential backoff
+        const delay = Math.min(1000 * Math.pow(2, currentRetries), 5000);
+        setRetryCounts((prev) => {
+          const newMap = new Map(prev);
+          newMap.set(index, currentRetries + 1);
+          return newMap;
+        });
 
-      setTimeout(() => {
-        const iframe = iframeRefs.current.get(index);
-        if (iframe) {
-          // Reset status and reload
-          statusRefs.current.set(index, 'loading');
-          setErrorFrames((prev) => {
-            const newSet = new Set(prev);
-            newSet.delete(index);
-            return newSet;
-          });
-          setLoadedFrames((prev) => {
-            const newSet = new Set(prev);
-            newSet.delete(index);
-            return newSet;
-          });
+        setTimeout(() => {
+          const iframe = iframeRefs.current.get(index);
+          if (iframe) {
+            // Reset status and reload
+            statusRefs.current.set(index, "loading");
+            setErrorFrames((prev) => {
+              const newSet = new Set(prev);
+              newSet.delete(index);
+              return newSet;
+            });
+            setLoadedFrames((prev) => {
+              const newSet = new Set(prev);
+              newSet.delete(index);
+              return newSet;
+            });
 
-          // Force reload by removing and re-adding src
-          const url = iframe.src;
-          iframe.src = '';
-          setTimeout(() => {
-            if (iframe) {
-              iframe.src = url;
-              // Set up new timeout
-              const newTimeout = setTimeout(() => {
-                if (statusRefs.current.get(index) === 'loading' && handleIframeErrorRef.current) {
-                  handleIframeErrorRef.current(index, false);
-                }
-              }, 10000);
-              timeoutRefs.current.set(index, newTimeout);
-            }
-          }, 100);
-        }
-      }, delay);
-    } else {
-      // Max retries reached or shouldRetry is false
-      statusRefs.current.set(index, 'error');
-      setErrorFrames((prev) => new Set(prev).add(index));
-    }
-  }, [retryCounts, maxRetries]);
+            // Force reload by removing and re-adding src
+            const url = iframe.src;
+            iframe.src = "";
+            setTimeout(() => {
+              if (iframe) {
+                iframe.src = url;
+                // Set up new timeout
+                const newTimeout = setTimeout(() => {
+                  if (
+                    statusRefs.current.get(index) === "loading" &&
+                    handleIframeErrorRef.current
+                  ) {
+                    handleIframeErrorRef.current(index, false);
+                  }
+                }, 10000);
+                timeoutRefs.current.set(index, newTimeout);
+              }
+            }, 100);
+          }
+        }, delay);
+      } else {
+        // Max retries reached or shouldRetry is false
+        statusRefs.current.set(index, "error");
+        setErrorFrames((prev) => new Set(prev).add(index));
+      }
+    },
+    [retryCounts, maxRetries],
+  );
 
   // Store the latest version of handleIframeError in ref for recursive calls
   handleIframeErrorRef.current = handleIframeError;
@@ -236,17 +263,20 @@ export default function Portfolio({ showViewMore = false }: PortfolioProps) {
         return newSet;
       });
 
-      statusRefs.current.set(index, 'loading');
+      statusRefs.current.set(index, "loading");
 
       // Force reload
       const url = iframe.src;
-      iframe.src = '';
+      iframe.src = "";
       setTimeout(() => {
         if (iframe) {
           iframe.src = url;
           // Set up timeout
           const timeout = setTimeout(() => {
-            if (statusRefs.current.get(index) === 'loading' && handleIframeErrorRef.current) {
+            if (
+              statusRefs.current.get(index) === "loading" &&
+              handleIframeErrorRef.current
+            ) {
               handleIframeErrorRef.current(index, false);
             }
           }, 10000);
@@ -259,14 +289,14 @@ export default function Portfolio({ showViewMore = false }: PortfolioProps) {
   useEffect(() => {
     // Initialize status refs
     portfolioItems.forEach((_, index) => {
-      statusRefs.current.set(index, 'loading');
+      statusRefs.current.set(index, "loading");
     });
 
     // Set up timeouts for each iframe (10 seconds, shorter for faster feedback)
     portfolioItems.forEach((_, index) => {
       const timeout = setTimeout(() => {
         const status = statusRefs.current.get(index);
-        if (status === 'loading' && handleIframeErrorRef.current) {
+        if (status === "loading" && handleIframeErrorRef.current) {
           handleIframeErrorRef.current(index, true);
         }
       }, 10000);
@@ -300,7 +330,7 @@ export default function Portfolio({ showViewMore = false }: PortfolioProps) {
         const status = statusRefs.current.get(index);
 
         // If iframe exists but hasn't loaded and isn't in error state, ensure it's loading
-        if (iframe && status === 'loading' && !iframe.src) {
+        if (iframe && status === "loading" && !iframe.src) {
           iframe.src = portfolioItems[index].url;
         }
       });
@@ -311,7 +341,7 @@ export default function Portfolio({ showViewMore = false }: PortfolioProps) {
         const status = statusRefs.current.get(index);
 
         // If iframe exists but hasn't loaded and isn't in error state, ensure it's loading
-        if (iframe && status === 'loading' && !iframe.src) {
+        if (iframe && status === "loading" && !iframe.src) {
           iframe.src = portfolioItems[index].url;
         }
       });
@@ -319,7 +349,10 @@ export default function Portfolio({ showViewMore = false }: PortfolioProps) {
   }, [currentIndex, showViewMore]);
 
   return (
-    <section id="portfolio" className="section-padding bg-gradient-to-br from-white to-navy-50">
+    <section
+      id="portfolio"
+      className="section-padding bg-gradient-to-br from-white to-navy-50"
+    >
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-4">
@@ -364,7 +397,7 @@ export default function Portfolio({ showViewMore = false }: PortfolioProps) {
             <div
               ref={carouselRef}
               className="relative h-[600px] sm:h-[650px] md:h-[700px] lg:h-[750px]"
-              style={{ perspective: '2000px' }}
+              style={{ perspective: "2000px" }}
               onTouchStart={onTouchStart}
               onTouchMove={onTouchMove}
               onTouchEnd={onTouchEnd}
@@ -373,20 +406,20 @@ export default function Portfolio({ showViewMore = false }: PortfolioProps) {
                 const IconComponent = item.icon;
                 const isLoaded = loadedFrames.has(index);
                 const hasError = errorFrames.has(index);
-                
+
                 // Calculate position relative to current index
                 const offset = index - currentIndex;
                 const absOffset = Math.abs(offset);
-                
+
                 // Only render cards within ±2 positions of current
                 if (absOffset > 2) return null;
-                
+
                 // Calculate transforms for Rolodex effect
                 const isActive = offset === 0;
                 const translateX = offset * 45; // Percentage shift
-                const translateZ = isActive ? 0 : -150 - (absOffset * 50); // Depth
-                const scale = isActive ? 1 : 0.85 - (absOffset * 0.1);
-                const opacity = isActive ? 1 : 0.4 - (absOffset * 0.15);
+                const translateZ = isActive ? 0 : -150 - absOffset * 50; // Depth
+                const scale = isActive ? 1 : 0.85 - absOffset * 0.1;
+                const opacity = isActive ? 1 : 0.5 - absOffset * 0.15;
                 const rotateY = offset * 8; // Slight rotation for depth
                 const zIndex = 10 - absOffset;
 
@@ -398,7 +431,7 @@ export default function Portfolio({ showViewMore = false }: PortfolioProps) {
                       transform: `translateX(${translateX}%) translateZ(${translateZ}px) scale(${scale}) rotateY(${rotateY}deg)`,
                       opacity: opacity,
                       zIndex: zIndex,
-                      pointerEvents: isActive ? 'auto' : 'none',
+                      pointerEvents: isActive ? "auto" : "none",
                     }}
                     onClick={() => {
                       if (!isActive && absOffset === 1) {
@@ -407,7 +440,9 @@ export default function Portfolio({ showViewMore = false }: PortfolioProps) {
                     }}
                   >
                     <div className="h-full flex items-center justify-center px-4 sm:px-8 md:px-12">
-                      <div className={`card-ios h-auto hover:shadow-ios ${isActive ? 'cursor-default' : 'cursor-pointer'} transition-all duration-300 max-w-full sm:max-w-xl md:max-w-2xl lg:max-w-3xl mx-auto touch-manipulation w-full`}>
+                      <div
+                        className={`card-ios h-auto hover:shadow-ios ${isActive ? "cursor-default" : "cursor-pointer"} transition-all duration-300 max-w-full sm:max-w-xl md:max-w-2xl lg:max-w-3xl mx-auto touch-manipulation w-full`}
+                      >
                         <div className="mb-4 flex items-center justify-between">
                           <div className="flex items-center gap-3">
                             <IconComponent className="w-8 h-8 sm:w-10 sm:h-10 text-navy-900 transform transition-transform duration-300" />
@@ -423,7 +458,7 @@ export default function Portfolio({ showViewMore = false }: PortfolioProps) {
                               e.stopPropagation();
                               if (!isActive) e.preventDefault();
                             }}
-                            className={`text-navy-400 hover:text-navy-900 transition-colors ${!isActive ? 'pointer-events-none' : ''}`}
+                            className={`text-navy-400 hover:text-navy-900 transition-colors ${!isActive ? "pointer-events-none" : ""}`}
                           >
                             <HiExternalLink className="w-4 h-4 sm:w-5 sm:h-5" />
                           </a>
@@ -434,7 +469,9 @@ export default function Portfolio({ showViewMore = false }: PortfolioProps) {
                             <div className="absolute inset-0 flex items-center justify-center z-10 bg-white/90 rounded-ios">
                               <div className="text-center">
                                 <div className="w-10 h-10 sm:w-12 sm:h-12 border-4 border-navy-300 border-t-navy-900 rounded-full animate-spin mx-auto mb-2"></div>
-                                <p className="text-xs sm:text-sm text-navy-600">Loading preview...</p>
+                                <p className="text-xs sm:text-sm text-navy-600">
+                                  Loading preview...
+                                </p>
                               </div>
                             </div>
                           )}
@@ -444,7 +481,9 @@ export default function Portfolio({ showViewMore = false }: PortfolioProps) {
                                 <div className="w-12 h-12 sm:w-16 sm:h-16 bg-navy-100 rounded-full flex items-center justify-center mx-auto mb-2 sm:mb-3">
                                   <HiExternalLink className="w-6 h-6 sm:w-8 sm:h-8 text-navy-600" />
                                 </div>
-                                <p className="text-xs sm:text-sm text-navy-600 mb-2">Preview unavailable</p>
+                                <p className="text-xs sm:text-sm text-navy-600 mb-2">
+                                  Preview unavailable
+                                </p>
                                 {isActive && (
                                   <div className="flex flex-col gap-2 items-center">
                                     <button
@@ -476,20 +515,20 @@ export default function Portfolio({ showViewMore = false }: PortfolioProps) {
                               }
                             }}
                             src={item.url}
-                            className={`desktop-preview ${isLoaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300`}
+                            className={`desktop-preview ${isLoaded ? "opacity-100" : "opacity-0"} transition-opacity duration-300`}
                             onLoad={() => handleIframeLoad(index)}
                             onError={() => handleIframeError(index, true)}
                             title={`${item.title} preview`}
                             loading={absOffset <= 1 ? "eager" : "lazy"}
                             sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-presentation"
-                            style={{ pointerEvents: 'none' }}
+                            style={{ pointerEvents: "none" }}
                           />
                         </div>
 
                         <h3 className="text-lg sm:text-xl font-bold text-navy-900 mb-2">
                           {item.title}
                         </h3>
-                        <div className='mb-1 sm:hidden'>
+                        <div className="mb-1 sm:hidden">
                           <span className="text-xs font-medium text-navy-600 bg-navy-50 px-2 py-1 rounded-full">
                             {item.category}
                           </span>
@@ -507,7 +546,7 @@ export default function Portfolio({ showViewMore = false }: PortfolioProps) {
                             onClick={(e) => {
                               if (!isActive) e.preventDefault();
                             }}
-                            className={`text-xs sm:text-sm text-navy-500 hover:text-navy-900 transition-colors flex items-center gap-2 ${!isActive ? 'pointer-events-none' : ''}`}
+                            className={`text-xs sm:text-sm text-navy-500 hover:text-navy-900 transition-colors flex items-center gap-2 ${!isActive ? "pointer-events-none" : ""}`}
                           >
                             Visit Site
                             <HiExternalLink className="w-3 h-3 sm:w-4 sm:h-4" />
@@ -526,10 +565,11 @@ export default function Portfolio({ showViewMore = false }: PortfolioProps) {
                 <button
                   key={index}
                   onClick={() => setCurrentIndex(index)}
-                  className={`h-2 rounded-full transition-all duration-300 touch-manipulation active:scale-110 ${index === currentIndex
-                    ? 'bg-navy-900 w-8'
-                    : 'bg-navy-300 w-2 md:hover:bg-navy-500'
-                    }`}
+                  className={`h-2 rounded-full transition-all duration-300 touch-manipulation active:scale-110 ${
+                    index === currentIndex
+                      ? "bg-navy-900 w-8"
+                      : "bg-navy-300 w-2 md:hover:bg-navy-500"
+                  }`}
                   aria-label={`Go to portfolio item ${index + 1}`}
                 />
               ))}
@@ -543,7 +583,10 @@ export default function Portfolio({ showViewMore = false }: PortfolioProps) {
               const isLoaded = loadedFrames.has(index);
               const hasError = errorFrames.has(index);
               return (
-                <div key={index} className="card-ios h-full hover:shadow-ios-lg group transition-all duration-300 overflow-hidden flex flex-col">
+                <div
+                  key={index}
+                  className="card-ios h-full hover:shadow-ios-lg group transition-all duration-300 overflow-hidden flex flex-col"
+                >
                   <div className="mb-4 flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <IconComponent className="w-10 h-10 text-navy-900 transform transition-transform duration-300" />
@@ -567,7 +610,9 @@ export default function Portfolio({ showViewMore = false }: PortfolioProps) {
                       <div className="absolute inset-0 flex items-center justify-center z-10 bg-white/90 rounded-ios">
                         <div className="text-center">
                           <div className="w-12 h-12 border-4 border-navy-300 border-t-navy-900 rounded-full animate-spin mx-auto mb-2"></div>
-                          <p className="text-sm text-navy-600">Loading preview...</p>
+                          <p className="text-sm text-navy-600">
+                            Loading preview...
+                          </p>
                         </div>
                       </div>
                     )}
@@ -577,7 +622,9 @@ export default function Portfolio({ showViewMore = false }: PortfolioProps) {
                           <div className="w-16 h-16 bg-navy-100 rounded-full flex items-center justify-center mx-auto mb-3">
                             <HiExternalLink className="w-8 h-8 text-navy-600" />
                           </div>
-                          <p className="text-sm text-navy-600 mb-2">Preview unavailable</p>
+                          <p className="text-sm text-navy-600 mb-2">
+                            Preview unavailable
+                          </p>
                           <div className="flex flex-col gap-2 items-center">
                             <button
                               onClick={(e) => {
@@ -607,13 +654,13 @@ export default function Portfolio({ showViewMore = false }: PortfolioProps) {
                         }
                       }}
                       src={item.url}
-                      className={`desktop-preview ${isLoaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300`}
+                      className={`desktop-preview ${isLoaded ? "opacity-100" : "opacity-0"} transition-opacity duration-300`}
                       onLoad={() => handleIframeLoad(index)}
                       onError={() => handleIframeError(index, true)}
                       title={`${item.title} preview`}
                       loading="lazy"
                       sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-presentation"
-                      style={{ pointerEvents: 'none' }}
+                      style={{ pointerEvents: "none" }}
                     />
                   </div>
 
@@ -645,4 +692,3 @@ export default function Portfolio({ showViewMore = false }: PortfolioProps) {
     </section>
   );
 }
-
