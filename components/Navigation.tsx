@@ -45,6 +45,12 @@ export default function Navigation() {
               Portfolio
             </Link>
             <Link
+              href="/case-studies"
+              className="text-navy-700 hover:text-navy-900 font-medium transition-colors"
+            >
+              Case Studies
+            </Link>
+            <Link
               href="/about"
               className="text-navy-700 hover:text-navy-900 font-medium transition-colors"
             >
@@ -104,6 +110,13 @@ export default function Navigation() {
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Portfolio
+            </Link>
+            <Link
+              href="/case-studies"
+              className="block px-4 py-2 text-navy-700 hover:bg-navy-50 rounded-lg transition-colors"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Case Studies
             </Link>
             <Link
               href="/about"

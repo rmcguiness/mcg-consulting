@@ -15,9 +15,9 @@ import { HiArrowUpRight } from "react-icons/hi2";
 
 const portfolioItems = [
   {
-    title: "Costal Buns",
+    title: "The Coastal Bun",
     description:
-      "A modern food truck website for an Asian fusion restaurant, featuring a bold design, menu showcase, and event booking functionality.",
+      "A full-stack food truck website for an Asian fusion bao bun business in the Florida Keys — mobile-first design, Square online ordering, location tracker, and SEO-optimized for local tourism search.",
     url: "https://pink-palm.shop/",
     icon: HiFire,
     category: "Food & Restaurant",
