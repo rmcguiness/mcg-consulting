@@ -1,7 +1,7 @@
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import Link from "next/link";
-import { HiFire, HiHeart, HiArrowUpRight } from "react-icons/hi";
+import { HiFire, HiHeart, HiArrowRight } from "react-icons/hi";
 
 const caseStudies = [
   {
@@ -66,7 +66,7 @@ export default function CaseStudiesPage() {
                           {study.category}
                         </span>
                       </div>
-                      <HiArrowUpRight className="w-5 h-5 text-navy-400 group-hover:text-navy-900 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                      <HiArrowRight className="w-5 h-5 text-navy-400 group-hover:text-navy-900 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                     </div>
 
                     {/* Content */}
@@ -94,7 +94,10 @@ export default function CaseStudiesPage() {
                       </div>
                       <div className="pt-3 border-t border-navy-100">
                         <span className="text-xs text-navy-500">
-                          Timeline: <strong className="text-navy-700">{study.timeline}</strong>
+                          Timeline:{" "}
+                          <strong className="text-navy-700">
+                            {study.timeline}
+                          </strong>
                         </span>
                       </div>
                     </div>
@@ -113,7 +116,7 @@ export default function CaseStudiesPage() {
                 className="btn-ios btn-navy inline-flex items-center gap-2"
               >
                 Get Started
-                <HiArrowUpRight className="w-4 h-4" />
+                <HiArrowRight className="w-4 h-4" />
               </Link>
             </div>
           </div>
