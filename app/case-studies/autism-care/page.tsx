@@ -84,7 +84,7 @@ export default function AutismCareCaseStudy() {
               </h2>
               <ul className="space-y-2">
                 {[
-                  "No web presence at all — potential clients couldn't find or vet the practice online",
+                  "No web presence at all — potential clients couldn\'t find or vet the practice online",
                   "Referral-only growth model was limiting capacity",
                   "No way to showcase services, credentials, or approach to care",
                   "Competitors with websites were capturing search traffic first",
@@ -92,7 +92,9 @@ export default function AutismCareCaseStudy() {
                 ].map((item, i) => (
                   <li key={i} className="flex items-start gap-2.5">
                     <span className="mt-1.5 w-2 h-2 rounded-full bg-navy-900 flex-shrink-0" />
-                    <span className="text-navy-600 leading-relaxed">{item}</span>
+                    <span className="text-navy-600 leading-relaxed">
+                      {item}
+                    </span>
                   </li>
                 ))}
               </ul>
@@ -222,10 +224,7 @@ export default function AutismCareCaseStudy() {
               <p className="text-lg text-navy-600 mb-4">
                 Want results like this for your business?
               </p>
-              <Link
-                href="/#contact"
-                className="btn-ios btn-navy inline-block"
-              >
+              <Link href="/#contact" className="btn-ios btn-navy inline-block">
                 Get in touch
               </Link>
             </div>

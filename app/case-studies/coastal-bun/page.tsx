@@ -7,7 +7,10 @@ const beforeAfter = [
   { before: "No website", after: "Full Next.js site live on custom domain" },
   { before: "No online ordering", after: "Square-integrated checkout" },
   { before: "Not findable online", after: "SEO-optimized for local search" },
-  { before: "Schedule shared verbally", after: "Live location + schedule page" },
+  {
+    before: "Schedule shared verbally",
+    after: "Live location + schedule page",
+  },
   { before: "No data on customers", after: "Analytics + pixel tracking ready" },
 ];
 
@@ -56,10 +59,11 @@ export default function CoastalBunCaseStudy() {
               <p className="text-navy-600 leading-relaxed">
                 <strong className="text-navy-800">The Coastal Bun</strong> is an
                 Asian fusion bao bun food truck operating in the Florida Keys —
-                one of the highest-traffic tourism corridors in the Southeast US.
-                The business is run by a single owner who needed a professional
-                online presence to compete with established restaurants in the
-                area, but had no website or digital marketing footprint.
+                one of the highest-traffic tourism corridors in the Southeast
+                US. The business is run by a single owner who needed a
+                professional online presence to compete with established
+                restaurants in the area, but had no website or digital marketing
+                footprint.
               </p>
             </div>
 
@@ -72,13 +76,15 @@ export default function CoastalBunCaseStudy() {
                 {[
                   "No website or online ordering capability",
                   "Zero visibility in local search results",
-                  "Customers had no way to find the truck's schedule or location",
+                  "Customers had no way to find the truck\'s schedule or location",
                   "No way to accept payments online — cash/card only at the truck",
                   "Competing against restaurants with full websites, Google listings, and social media",
                 ].map((item, i) => (
                   <li key={i} className="flex items-start gap-2.5">
                     <span className="mt-1.5 w-2 h-2 rounded-full bg-navy-900 flex-shrink-0" />
-                    <span className="text-navy-600 leading-relaxed">{item}</span>
+                    <span className="text-navy-600 leading-relaxed">
+                      {item}
+                    </span>
                   </li>
                 ))}
               </ul>
@@ -100,7 +106,7 @@ export default function CoastalBunCaseStudy() {
                   },
                   {
                     label: "Square payment integration",
-                    desc: "Online ordering built in, zero extra fees beyond Square's standard rate",
+                    desc: "Online ordering built in, zero extra fees beyond Square\'s standard rate",
                   },
                   {
                     label: "Location & schedule tracker",
@@ -226,10 +232,7 @@ export default function CoastalBunCaseStudy() {
               <p className="text-lg text-navy-600 mb-4">
                 Want results like this for your business?
               </p>
-              <Link
-                href="/#contact"
-                className="btn-ios btn-navy inline-block"
-              >
+              <Link href="/#contact" className="btn-ios btn-navy inline-block">
                 Get in touch
               </Link>
             </div>
