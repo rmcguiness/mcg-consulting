@@ -190,10 +190,11 @@ export default function AutismCareCaseStudy() {
               <p className="text-navy-200 leading-relaxed">
                 The healthcare and care services industry runs on{" "}
                 <strong className="text-white">trust</strong>. A well-designed,
-                accessible website isn't just a nice-to-have — it's table
-                stakes. Insurance providers, case managers, and families all do
-                online research before committing. Without a site, this practice
-                was losing potential clients at the first step of the funnel.
+                accessible website isn&apos;t just a nice-to-have — it&apos;s
+                table stakes. Insurance providers, case managers, and families
+                all do online research before committing. Without a site, this
+                practice was losing potential clients at the first step of the
+                funnel.
               </p>
             </div>
 
