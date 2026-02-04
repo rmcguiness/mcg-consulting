@@ -58,8 +58,8 @@ html {
 
 /* Desktop preview iframe scaling */
 .desktop-preview {
-  width: 1280px;
-  height: 720px;
+  width: 200%;
+  height: 200%;
   transform-origin: top left;
   border: none;
   position: absolute;
@@ -78,56 +78,7 @@ html {
 .preview-container .desktop-preview {
   /* Calculate scale to fit container width while maintaining aspect */
   /* Container width / 1280px = scale factor */
-  transform: scale(calc(100vw / 1805px));
-}
-
-/* Responsive scaling breakpoints - smoother transitions */
-@media (max-width: 340px) {
-  :root {
-    --preview-scale: 0.24; /* ~307px container */
-  }
-}
-
-@media (min-width: 341px) and (max-width: 425px) {
-  :root {
-    --preview-scale: 0.28; /* ~358px container */
-  }
-}
-
-@media (min-width: 426px) and (max-width: 518px) {
-  :root {
-    --preview-scale: 0.33; /* ~422px container */
-  }
-}
-
-@media (min-width: 519px) and (max-width: 640px) {
-  :root {
-    --preview-scale: 0.4; /* ~512px container */
-  }
-}
-
-@media (min-width: 641px) and (max-width: 768px) {
-  :root {
-    --preview-scale: 0.48; /* ~614px container */
-  }
-}
-
-@media (min-width: 769px) and (max-width: 1024px) {
-  :root {
-    --preview-scale: 0.56; /* ~717px container */
-  }
-}
-
-@media (min-width: 1025px) and (max-width: 1280px) {
-  :root {
-    --preview-scale: 0.65; /* ~832px container */
-  }
-}
-
-@media (min-width: 1281px) {
-  :root {
-    --preview-scale: 0.75; /* ~960px container */
-  }
+  transform: scale(0.5);
 }
 
 /* Mobile performance optimizations */
