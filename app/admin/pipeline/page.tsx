@@ -18,6 +18,7 @@ interface Prospect {
   Status: string;
   Notes: string;
   Last_Contact?: string;
+  Next_Followup?: string;
 }
 
 const STAGES = [
@@ -89,6 +90,15 @@ function daysSince(dateStr?: string): string {
   if (diff === 0) return "Today";
   if (diff === 1) return "1 day ago";
   return `${diff} days ago`;
+}
+
+function isOverdue(prospect: Prospect): boolean {
+  if (!prospect.Next_Followup) return false;
+  const followup = new Date(prospect.Next_Followup + "T00:00:00");
+  followup.setHours(0, 0, 0, 0);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  return followup <= today;
 }
 
 export default function PipelinePage() {
@@ -282,8 +292,13 @@ export default function PipelinePage() {
                     >
                       {/* Name & Priority */}
                       <div className="flex items-start justify-between gap-2 mb-2">
-                        <h4 className="text-sm font-semibold text-navy-900 leading-tight">
+                        <h4 className="text-sm font-semibold text-navy-900 leading-tight flex items-center gap-1">
                           {prospect.Name}
+                          {isOverdue(prospect) && (
+                            <span title="Overdue follow-up" className="text-red-500 text-xs">
+                              🔔
+                            </span>
+                          )}
                         </h4>
                         <span
                           className={`shrink-0 text-[10px] font-medium px-1.5 py-0.5 rounded-full ${

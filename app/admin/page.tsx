@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
@@ -17,13 +17,20 @@ interface Prospect {
   Deal_Value: string;
   Status: string;
   Notes: string;
+  Last_Contact: string;
+  Next_Followup: string;
+}
+
+interface FollowupItem extends Prospect {
+  days_overdue?: number;
+  days_until?: number;
 }
 
 const statusColors: Record<string, string> = {
   "To Contact": "bg-blue-100 text-blue-800",
   "In Progress": "bg-yellow-100 text-yellow-800",
   "Reached Out": "bg-purple-100 text-purple-800",
-  "Discovery": "bg-indigo-100 text-indigo-800",
+  Discovery: "bg-indigo-100 text-indigo-800",
   "Proposal Sent": "bg-orange-100 text-orange-800",
   Won: "bg-green-100 text-green-800",
   Lost: "bg-red-100 text-red-800",
@@ -35,11 +42,44 @@ const priorityColors: Record<string, string> = {
   Low: "bg-gray-100 text-gray-600",
 };
 
+function formatDate(dateStr: string): string {
+  if (!dateStr) return "";
+  const d = new Date(dateStr + "T00:00:00");
+  return d.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+}
+
+function todayStr(): string {
+  return new Date().toISOString().split("T")[0];
+}
+
+function addDays(days: number): string {
+  const d = new Date();
+  d.setDate(d.getDate() + days);
+  return d.toISOString().split("T")[0];
+}
+
 export default function AdminPortal() {
   const [prospects, setProspects] = useState<Prospect[]>([]);
   const [loading, setLoading] = useState(true);
   const [expandedRow, setExpandedRow] = useState<number | null>(null);
+  const [overdue, setOverdue] = useState<FollowupItem[]>([]);
+  const [upcoming, setUpcoming] = useState<FollowupItem[]>([]);
+  const [followupDate, setFollowupDate] = useState<Record<string, string>>({});
   const router = useRouter();
+
+  const fetchFollowups = useCallback(() => {
+    fetch("/api/admin/followups")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.overdue) setOverdue(data.overdue);
+        if (data.upcoming) setUpcoming(data.upcoming);
+      })
+      .catch(console.error);
+  }, []);
 
   useEffect(() => {
     fetch("/api/admin/prospects")
@@ -61,11 +101,59 @@ export default function AdminPortal() {
       })
       .catch(console.error)
       .finally(() => setLoading(false));
-  }, [router]);
+
+    fetchFollowups();
+  }, [router, fetchFollowups]);
 
   function handleLogout() {
     document.cookie = "admin_auth=; path=/; max-age=0";
     router.push("/admin/login");
+  }
+
+  async function handleFollowupAction(
+    name: string,
+    action: "done" | "skip"
+  ) {
+    const last_contact = action === "done" ? todayStr() : undefined;
+    const next_followup = action === "done" ? addDays(7) : addDays(3);
+
+    await fetch("/api/admin/followups", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, last_contact, next_followup }),
+    });
+
+    // Refresh data
+    fetchFollowups();
+    const res = await fetch("/api/admin/prospects");
+    const data = await res.json();
+    if (data?.prospects) {
+      const sorted = [...data.prospects].sort(
+        (a: Prospect, b: Prospect) =>
+          parseInt(b.Score || "0") - parseInt(a.Score || "0")
+      );
+      setProspects(sorted);
+    }
+  }
+
+  async function handleScheduleFollowup(name: string, date: string) {
+    if (!date) return;
+    await fetch("/api/admin/followups", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, next_followup: date }),
+    });
+    setFollowupDate((prev) => ({ ...prev, [name]: "" }));
+    fetchFollowups();
+    const res = await fetch("/api/admin/prospects");
+    const data = await res.json();
+    if (data?.prospects) {
+      const sorted = [...data.prospects].sort(
+        (a: Prospect, b: Prospect) =>
+          parseInt(b.Score || "0") - parseInt(a.Score || "0")
+      );
+      setProspects(sorted);
+    }
   }
 
   if (loading) {
@@ -80,6 +168,8 @@ export default function AdminPortal() {
     const match = p.Deal_Value.match(/\$([\d,]+)/);
     return sum + (match ? parseInt(match[1].replace(",", "")) : 0);
   }, 0);
+
+  const hasFollowups = overdue.length > 0 || upcoming.length > 0;
 
   return (
     <div className="min-h-screen bg-navy-50">
@@ -110,8 +200,123 @@ export default function AdminPortal() {
         </nav>
       </header>
 
-      {/* Stats */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
+        {/* Follow-ups Section */}
+        {hasFollowups && (
+          <div className="mb-6">
+            <h2 className="text-lg font-semibold text-navy-900 mb-3">
+              Follow-ups
+              {overdue.length > 0 && (
+                <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-700">
+                  {overdue.length} overdue
+                </span>
+              )}
+              {upcoming.length > 0 && (
+                <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-700">
+                  {upcoming.length} upcoming
+                </span>
+              )}
+            </h2>
+            <div className="space-y-2">
+              {overdue.map((item) => (
+                <div
+                  key={item.Name + "-overdue"}
+                  className="card-ios !p-3 border-l-4 border-l-red-500 flex items-center justify-between gap-4"
+                >
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="font-medium text-navy-900 text-sm">
+                        {item.Name}
+                      </span>
+                      <span className="text-xs text-navy-500">
+                        {item.Category}
+                      </span>
+                      <span
+                        className={`inline-block px-2 py-0.5 rounded-full text-xs font-medium ${
+                          statusColors[item.Status] || "bg-gray-100 text-gray-600"
+                        }`}
+                      >
+                        {item.Status}
+                      </span>
+                      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-700">
+                        {item.days_overdue === 0
+                          ? "Due today"
+                          : `${item.days_overdue}d overdue`}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2 shrink-0">
+                    <button
+                      onClick={() =>
+                        handleFollowupAction(item.Name, "done")
+                      }
+                      className="px-3 py-1.5 rounded-lg bg-green-600 text-white text-xs font-medium hover:bg-green-700 transition-colors"
+                    >
+                      Mark Done + Set Next
+                    </button>
+                    <button
+                      onClick={() =>
+                        handleFollowupAction(item.Name, "skip")
+                      }
+                      className="px-3 py-1.5 rounded-lg bg-navy-100 text-navy-700 text-xs font-medium hover:bg-navy-200 transition-colors"
+                    >
+                      Skip
+                    </button>
+                  </div>
+                </div>
+              ))}
+              {upcoming.map((item) => (
+                <div
+                  key={item.Name + "-upcoming"}
+                  className="card-ios !p-3 border-l-4 border-l-yellow-400 flex items-center justify-between gap-4"
+                >
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="font-medium text-navy-900 text-sm">
+                        {item.Name}
+                      </span>
+                      <span className="text-xs text-navy-500">
+                        {item.Category}
+                      </span>
+                      <span
+                        className={`inline-block px-2 py-0.5 rounded-full text-xs font-medium ${
+                          statusColors[item.Status] || "bg-gray-100 text-gray-600"
+                        }`}
+                      >
+                        {item.Status}
+                      </span>
+                      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-700">
+                        {item.days_until === 1
+                          ? "Tomorrow"
+                          : `In ${item.days_until}d`}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2 shrink-0">
+                    <button
+                      onClick={() =>
+                        handleFollowupAction(item.Name, "done")
+                      }
+                      className="px-3 py-1.5 rounded-lg bg-green-600 text-white text-xs font-medium hover:bg-green-700 transition-colors"
+                    >
+                      Mark Done + Set Next
+                    </button>
+                    <button
+                      onClick={() =>
+                        handleFollowupAction(item.Name, "skip")
+                      }
+                      className="px-3 py-1.5 rounded-lg bg-navy-100 text-navy-700 text-xs font-medium hover:bg-navy-200 transition-colors"
+                    >
+                      Skip
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Stats */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
           <div className="card-ios !p-4">
             <p className="text-sm text-navy-500">Total Leads</p>
@@ -260,6 +465,64 @@ export default function AdminPortal() {
                               <p className="text-navy-800 leading-relaxed">
                                 {prospect.Notes}
                               </p>
+                            </div>
+                            {/* Follow-up scheduling */}
+                            <div className="sm:col-span-2 border-t border-navy-200 pt-3">
+                              <div className="flex flex-wrap items-center gap-3">
+                                <div>
+                                  <p className="text-navy-500 text-xs mb-1">
+                                    Last Contact
+                                  </p>
+                                  <p className="text-navy-800 text-sm font-medium">
+                                    {prospect.Last_Contact
+                                      ? formatDate(prospect.Last_Contact)
+                                      : "Never"}
+                                  </p>
+                                </div>
+                                <div>
+                                  <p className="text-navy-500 text-xs mb-1">
+                                    Next Follow-up
+                                  </p>
+                                  <p className="text-navy-800 text-sm font-medium">
+                                    {prospect.Next_Followup
+                                      ? formatDate(prospect.Next_Followup)
+                                      : "Not scheduled"}
+                                  </p>
+                                </div>
+                                <div className="flex items-end gap-2 ml-auto">
+                                  <div>
+                                    <label className="text-navy-500 text-xs block mb-1">
+                                      Schedule Follow-up
+                                    </label>
+                                    <input
+                                      type="date"
+                                      value={followupDate[prospect.Name] || ""}
+                                      min={todayStr()}
+                                      onChange={(e) =>
+                                        setFollowupDate((prev) => ({
+                                          ...prev,
+                                          [prospect.Name]: e.target.value,
+                                        }))
+                                      }
+                                      onClick={(e) => e.stopPropagation()}
+                                      className="border border-navy-200 rounded-md px-2 py-1 text-sm text-navy-800 bg-white"
+                                    />
+                                  </div>
+                                  <button
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      handleScheduleFollowup(
+                                        prospect.Name,
+                                        followupDate[prospect.Name] || ""
+                                      );
+                                    }}
+                                    disabled={!followupDate[prospect.Name]}
+                                    className="px-3 py-1.5 rounded-lg bg-navy-900 text-white text-xs font-medium hover:bg-navy-800 transition-colors disabled:opacity-40"
+                                  >
+                                    Set
+                                  </button>
+                                </div>
+                              </div>
                             </div>
                             <div className="sm:col-span-2 flex items-center gap-3 text-xs">
                               <span className="text-navy-500">
