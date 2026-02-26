@@ -2,6 +2,7 @@
 
 import { Fragment, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 interface Prospect {
   Name: string;
@@ -83,17 +84,30 @@ export default function AdminPortal() {
   return (
     <div className="min-h-screen bg-navy-50">
       {/* Header */}
-      <header className="bg-navy-900 text-white px-6 py-4 flex items-center justify-between">
-        <div>
+      <header className="bg-navy-900 text-white px-6 py-4">
+        <div className="flex items-center justify-between">
           <h1 className="text-xl font-bold">MCG Admin</h1>
-          <p className="text-navy-300 text-sm">Lead Pipeline</p>
+          <button
+            onClick={handleLogout}
+            className="text-sm text-navy-300 hover:text-white transition-colors"
+          >
+            Logout
+          </button>
         </div>
-        <button
-          onClick={handleLogout}
-          className="text-sm text-navy-300 hover:text-white transition-colors"
-        >
-          Logout
-        </button>
+        <nav className="flex gap-6 mt-3 border-t border-navy-700 pt-3">
+          <Link
+            href="/admin"
+            className="text-sm font-medium text-white border-b-2 border-white pb-1"
+          >
+            Leads
+          </Link>
+          <Link
+            href="/admin/pipeline"
+            className="text-sm text-navy-300 hover:text-white transition-colors"
+          >
+            Pipeline
+          </Link>
+        </nav>
       </header>
 
       {/* Stats */}
