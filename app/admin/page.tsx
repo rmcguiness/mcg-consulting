@@ -282,6 +282,13 @@ export default function AdminPortal() {
                                   {prospect.Score}
                                 </span>
                               </span>
+                              <Link
+                                href={`/admin/proposal?prospect=${encodeURIComponent(prospect.Name)}`}
+                                className="ml-auto px-3 py-1 rounded-full bg-navy-900 text-white text-xs font-medium hover:bg-navy-800 transition-colors"
+                                onClick={(e) => e.stopPropagation()}
+                              >
+                                Generate Proposal
+                              </Link>
                             </div>
                           </div>
                         </td>
