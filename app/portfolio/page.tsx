@@ -6,11 +6,10 @@ export default function PortfolioPage() {
   return (
     <main className="min-h-screen bg-white flex flex-col">
       <Navigation />
-      <div className="flex-1">
+      <div className="flex-1 subpage-top">
         <Portfolio />
       </div>
       <Footer />
     </main>
   );
 }
-

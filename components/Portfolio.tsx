@@ -9,9 +9,9 @@ import {
   HiChevronRight,
   HiHome,
 } from "react-icons/hi";
+import { HiArrowUpRight } from "react-icons/hi2";
 import { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
-import { HiArrowUpRight } from "react-icons/hi2";
 
 const portfolioItems = [
   {
@@ -355,20 +355,10 @@ export default function Portfolio({ showViewMore = false }: PortfolioProps) {
     >
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-4">
-            <h2 className="text-4xl sm:text-5xl font-bold text-navy-900">
-              Our Portfolio
-            </h2>
-            {showViewMore && (
-              <Link
-                href="/portfolio"
-                className="btn-ios btn-white border-2 border-navy-900 flex items-center gap-2 whitespace-nowrap"
-              >
-                <HiArrowUpRight className="w-4 h-4" />
-              </Link>
-            )}
-          </div>
-          <p className="text-xl text-navy-600 max-w-2xl mx-auto">
+          <h2 className="text-4xl sm:text-5xl font-bold text-navy-900 mb-4">
+            Our Portfolio
+          </h2>
+          <p className="text-lg sm:text-xl text-navy-600 max-w-2xl mx-auto">
             Explore some of our recent work and see the results we deliver
           </p>
         </div>
@@ -574,6 +564,18 @@ export default function Portfolio({ showViewMore = false }: PortfolioProps) {
                 />
               ))}
             </div>
+
+            {showViewMore && (
+              <div className="text-center mt-10">
+                <Link
+                  href="/portfolio"
+                  className="btn-ios btn-secondary inline-flex items-center gap-2"
+                >
+                  View All Projects
+                  <HiArrowUpRight className="w-4 h-4" />
+                </Link>
+              </div>
+            )}
           </div>
         ) : (
           // Grid view for dedicated portfolio page

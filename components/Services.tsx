@@ -1,4 +1,4 @@
-import { HiCode, HiColorSwatch, HiChartBar, HiLightBulb, HiLightningBolt, HiCog, HiArrowRight } from 'react-icons/hi';
+import { HiCode, HiColorSwatch, HiChartBar, HiLightBulb, HiLightningBolt, HiCog } from 'react-icons/hi';
 import Link from 'next/link';
 import { HiArrowUpRight } from 'react-icons/hi2';
 
@@ -44,20 +44,10 @@ export default function Services({ showViewMore = false }: ServicesProps) {
     <section id="services" className="section-padding bg-white">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-4">
-            <h2 className="text-4xl sm:text-5xl font-bold text-navy-900">
-              Our Services
-            </h2>
-            {showViewMore && (
-              <Link
-                href="/services"
-                className="btn-ios btn-white border-2 border-navy-900 flex items-center gap-2 whitespace-nowrap"
-              >
-                <HiArrowUpRight className="w-4 h-4" />
-              </Link>
-            )}
-          </div>
-          <p className="text-xl text-navy-600 max-w-2xl mx-auto">
+          <h2 className="text-4xl sm:text-5xl font-bold text-navy-900 mb-4">
+            Our Services
+          </h2>
+          <p className="text-lg sm:text-xl text-navy-600 max-w-2xl mx-auto">
             Comprehensive solutions tailored to your business needs
           </p>
         </div>
@@ -68,23 +58,34 @@ export default function Services({ showViewMore = false }: ServicesProps) {
             return (
               <div
                 key={index}
-                className="card-ios group cursor-pointer"
+                className="card-ios group cursor-default"
               >
-                <div className="mb-4 flex items-center justify-center">
-                  <IconComponent className="w-12 h-12 text-navy-900 transform group-hover:scale-110 transition-transform duration-300 origin-center" />
+                <div className="w-12 h-12 bg-navy-50 rounded-xl flex items-center justify-center mb-5">
+                  <IconComponent className="w-6 h-6 text-navy-900 transform group-hover:scale-110 transition-transform duration-300 origin-center" />
                 </div>
-                <h3 className="text-2xl font-bold text-navy-900 mb-3">
+                <h3 className="text-xl font-bold text-navy-900 mb-2">
                   {service.title}
                 </h3>
-                <p className="text-navy-600 leading-relaxed">
+                <p className="text-navy-600 leading-relaxed text-sm">
                   {service.description}
                 </p>
               </div>
             );
           })}
         </div>
+
+        {showViewMore && (
+          <div className="text-center mt-12">
+            <Link
+              href="/services"
+              className="btn-ios btn-secondary inline-flex items-center gap-2"
+            >
+              View All Services
+              <HiArrowUpRight className="w-4 h-4" />
+            </Link>
+          </div>
+        )}
       </div>
-    </section >
+    </section>
   );
 }
-

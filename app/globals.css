@@ -29,6 +29,11 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Prevent body scroll when mobile menu is open */
+body.menu-open {
+  overflow: hidden;
+}
+
 /* iOS-like button styles */
 .btn-ios {
   @apply px-6 py-3 rounded-ios font-medium transition-all duration-200;
@@ -45,6 +50,13 @@ html {
   @apply hover:bg-navy-50;
 }
 
+.btn-navy {
+  @apply bg-navy-900 text-white hover:bg-navy-800;
+  @apply shadow-ios hover:shadow-ios-lg;
+  @apply px-6 py-3 rounded-ios font-medium transition-all duration-200;
+  @apply active:scale-95;
+}
+
 /* Card styles */
 .card-ios {
   @apply bg-white rounded-ios shadow-ios p-6;
@@ -54,6 +66,11 @@ html {
 /* Section spacing */
 .section-padding {
   @apply py-20 px-4 sm:px-6 lg:px-8;
+}
+
+/* Subpage hero spacing — accounts for fixed navbar */
+.subpage-top {
+  @apply pt-28 sm:pt-32;
 }
 
 /* Desktop preview iframe scaling */
@@ -76,8 +93,6 @@ html {
 }
 
 .preview-container .desktop-preview {
-  /* Calculate scale to fit container width while maintaining aspect */
-  /* Container width / 1280px = scale factor */
   transform: scale(0.5);
 }
 
@@ -105,6 +120,25 @@ canvas {
   -ms-transform: translateZ(0);
   -o-transform: translateZ(0);
   transform: translateZ(0);
+}
+
+/* Divider with text */
+.divider-text {
+  @apply flex items-center gap-4 py-6;
+}
+
+.divider-text::before,
+.divider-text::after {
+  content: "";
+  @apply flex-1 h-px bg-navy-200;
+}
+
+/* Form input focus ring */
+.input-focus {
+  @apply w-full px-4 py-3.5 rounded-xl border-2 border-navy-200 
+         focus:border-navy-900 focus:ring-4 focus:ring-navy-100 
+         focus:outline-none transition-all duration-200 text-navy-900
+         placeholder:text-navy-400;
 }
 
 /* Smooth animations with reduced motion support */

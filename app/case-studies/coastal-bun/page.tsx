@@ -18,7 +18,7 @@ export default function CoastalBunCaseStudy() {
   return (
     <main className="min-h-screen bg-white flex flex-col">
       <Navigation />
-      <div className="flex-1">
+      <div className="flex-1 subpage-top">
         <section className="section-padding bg-gradient-to-br from-white to-navy-50">
           <div className="max-w-3xl mx-auto">
             {/* Back Link */}
