@@ -1,10 +1,4 @@
-import {
-  Document,
-  Page,
-  Text,
-  View,
-  StyleSheet,
-} from "@react-pdf/renderer";
+import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
 
 const navy = "#102a43";
 const navyLight = "#243b53";
@@ -22,8 +16,8 @@ const styles = StyleSheet.create({
   // Header
   header: {
     borderBottom: `2px solid ${navy}`,
-    paddingBottom: 16,
-    marginBottom: 30,
+    paddingBottom: 10,
+    marginBottom: 15,
   },
   companyName: {
     fontSize: 24,
@@ -34,7 +28,7 @@ const styles = StyleSheet.create({
   tagline: {
     fontSize: 10,
     color: gray,
-    marginTop: 4,
+    marginTop: 15,
     letterSpacing: 0.5,
   },
   // Proposal title area
