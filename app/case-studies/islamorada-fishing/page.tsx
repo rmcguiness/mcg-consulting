@@ -92,7 +92,7 @@ export default function IslamoradaFishingCaseStudy() {
                 A family-owned sport fishing charter operating out of Islamorada
                 — the self-proclaimed{" "}
                 <strong className="text-navy-800">
-                  "Sport Fishing Capital of the World"
+                  &ldquo;Sport Fishing Capital of the World&rdquo;
                 </strong>
                 . With decades of local knowledge, a fleet of fully rigged
                 offshore boats, and a loyal base of repeat customers, the

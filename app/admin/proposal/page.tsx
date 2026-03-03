@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import dynamic from "next/dynamic";
@@ -50,7 +50,7 @@ function parseDealPrice(deal: string): number {
   return match ? parseInt(match[1].replace(",", "")) : 5000;
 }
 
-export default function ProposalGenerator() {
+function ProposalGeneratorInner() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const prospectName = searchParams.get("prospect") || "";
@@ -304,5 +304,13 @@ export default function ProposalGenerator() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function ProposalGenerator() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-navy-50 flex items-center justify-center"><p className="text-navy-500">Loading...</p></div>}>
+      <ProposalGeneratorInner />
+    </Suspense>
   );
 }
