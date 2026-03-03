@@ -6,6 +6,7 @@ import {
   HiHeart,
   HiArrowRight,
   HiTrendingUp,
+  HiStar,
 } from "react-icons/hi";
 import { HiDevicePhoneMobile } from "react-icons/hi2";
 
@@ -21,6 +22,19 @@ const caseStudies = [
     icon: HiTrendingUp,
     tags: ["Next.js 15", "FareHarbor API", "Photo Gallery", "SEO"],
     metric: "+40% online bookings",
+    metricColor: "text-green-700 bg-green-50",
+  },
+  {
+    slug: "conch-cruiser-key-west",
+    title: "Conch Cruiser Boat Tours",
+    subtitle: "Full Rebuild + FareHarbor + Mobile Optimization",
+    description:
+      "A Key West boat tour operator with an outdated 2018 site and zero online booking. Full rebuild with FareHarbor integration and live Google review widget. Booking conversion rate tripled in 6 months.",
+    category: "Tourism & Boat Tours",
+    timeline: "3 weeks",
+    icon: HiStar,
+    tags: ["Next.js 15", "FareHarbor API", "Google Reviews", "Mobile-First"],
+    metric: "3.2× booking conversions",
     metricColor: "text-green-700 bg-green-50",
   },
   {
@@ -88,7 +102,7 @@ export default function CaseStudiesPage() {
             {/* Stats Bar */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-14">
               {[
-                { value: "4+", label: "Projects launched" },
+                { value: "5+", label: "Projects launched" },
                 { value: "2 wks", label: "Avg. time to live" },
                 { value: "100%", label: "Mobile responsive" },
                 { value: "Keys-based", label: "Local expertise" },
