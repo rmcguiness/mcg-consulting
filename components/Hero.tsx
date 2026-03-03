@@ -30,16 +30,16 @@ export default function Hero() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 items-start">
             <a
-              href="#contact"
+              href="/contact"
               className="btn-ios btn-primary text-lg px-8 py-4"
             >
-              Start Your Project
+              Get a Free Quote
             </a>
             <a
-              href="#services"
+              href="/portfolio"
               className="btn-ios btn-secondary text-lg px-8 py-4"
             >
-              Our Services
+              View Our Work
             </a>
           </div>
         </div>

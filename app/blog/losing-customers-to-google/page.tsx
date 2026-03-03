@@ -133,7 +133,7 @@ export default function LosingCustomersPost() {
               <p className="text-navy-200 leading-relaxed mb-4">
                 MCG Consulting builds websites for Florida Keys small businesses — fishing charters, restaurants, dive shops, watersports operators, and marinas. If you&apos;re not sure what your site is actually doing for you, reach out and we&apos;ll take a look.
               </p>
-              <Link href="/#contact" className="btn-ios btn-primary inline-block">
+              <Link href="/contact" className="btn-ios btn-primary inline-block">
                 Get a free site audit
               </Link>
             </div>

@@ -8,8 +8,10 @@ import {
   HiChevronLeft,
   HiChevronRight,
   HiHome,
+  HiHeart,
+  HiChartBar,
 } from "react-icons/hi";
-import { HiArrowUpRight } from "react-icons/hi2";
+import { HiArrowUpRight, HiAcademicCap } from "react-icons/hi2";
 import { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 
@@ -18,28 +20,61 @@ const portfolioItems = [
     title: "The Coastal Bun",
     description:
       "A full-stack food truck website for an Asian fusion bao bun business in the Florida Keys — mobile-first design, Square online ordering, location tracker, and SEO-optimized for local tourism search.",
-    url: "https://pink-palm.shop/",
+    url: "https://costalbun.shop",
     icon: HiFire,
-    category: "Food & Restaurant",
+    category: "Restaurant & Food Service",
     image: "coastal-buns",
+    tech: "Next.js 14, Tailwind CSS, Square Payments",
   },
   {
-    title: "Country Farms",
+    title: "Price Tracker",
     description:
-      "A modern convenience store website for a local grocery store, featuring a bold design, store showcase, and seo optimization.",
-    url: "https://country-farms-convenience.vercel.app/",
-    icon: HiShoppingBag,
-    category: "Convenience Store",
-    image: "country-farms",
+      "A grocery price comparison SaaS app with a mobile companion. Compare prices across stores, track price history, and get alerts on deals — built with Next.js and Expo.",
+    url: "https://price-tracker-lyart.vercel.app",
+    icon: HiChartBar,
+    category: "SaaS / Consumer App",
+    image: "price-tracker",
+    tech: "Next.js 14, Expo, PostgreSQL, Clerk, Stripe",
   },
   {
     title: "McCaffery HVAC",
     description:
-      "HVAC company website featuring a modern design, contact form, and service information.",
+      "Business website for a local HVAC company featuring service breakdowns, a contact form, and a clean professional design that builds trust with homeowners.",
     url: "https://mccaffery-hvac.vercel.app/",
     icon: HiHome,
-    category: "HVAC",
+    category: "Local Business / Service",
     image: "mccaffery-hvac",
+    tech: "Next.js, TypeScript, Tailwind CSS",
+  },
+  {
+    title: "Compassionate Care",
+    description:
+      "An accessibility-first website for an autism home and community care practice — ARIA-compliant, SEO-optimized for local care searches, with integrated lead capture.",
+    url: "",
+    icon: HiHeart,
+    category: "Healthcare",
+    image: "autism-care",
+    tech: "HTML5, CSS3, Vanilla JS, Formspree",
+  },
+  {
+    title: "FL Keys Flight Academy",
+    description:
+      "Website for a Florida Keys flight academy featuring course information, instructor bios, and enrollment — designed to convert prospective student pilots.",
+    url: "",
+    icon: HiAcademicCap,
+    category: "Education & Aviation",
+    image: "flight-academy",
+    tech: "Next.js, TypeScript, Tailwind CSS",
+  },
+  {
+    title: "Country Farms",
+    description:
+      "A modern convenience store website for a local grocery store, featuring a bold design, store showcase, and SEO optimization.",
+    url: "https://country-farms-convenience.vercel.app/",
+    icon: HiShoppingBag,
+    category: "Convenience Store",
+    image: "country-farms",
+    tech: "Next.js, Tailwind CSS",
   },
   {
     title: "NextPlayground",
@@ -49,8 +84,8 @@ const portfolioItems = [
     icon: HiCode,
     category: "Web Development",
     image: "next-playground",
+    tech: "Next.js, Supabase, React",
   },
-
   {
     title: "MKR Store",
     description:
@@ -59,6 +94,7 @@ const portfolioItems = [
     icon: HiShoppingBag,
     category: "E-Commerce",
     image: "mkr-store",
+    tech: "Next.js, Tailwind CSS",
   },
 ];
 
@@ -498,21 +534,30 @@ export default function Portfolio({ showViewMore = false }: PortfolioProps) {
                               </div>
                             </div>
                           )}
-                          <iframe
-                            ref={(el) => {
-                              if (el) {
-                                iframeRefs.current.set(index, el);
-                              }
-                            }}
-                            src={item.url}
-                            className={`desktop-preview ${isLoaded ? "opacity-100" : "opacity-0"} transition-opacity duration-300`}
-                            onLoad={() => handleIframeLoad(index)}
-                            onError={() => handleIframeError(index, true)}
-                            title={`${item.title} preview`}
-                            loading={absOffset <= 1 ? "eager" : "lazy"}
-                            sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-presentation"
-                            style={{ pointerEvents: "none" }}
-                          />
+                          {item.url ? (
+                            <iframe
+                              ref={(el) => {
+                                if (el) {
+                                  iframeRefs.current.set(index, el);
+                                }
+                              }}
+                              src={item.url}
+                              className={`desktop-preview ${isLoaded ? "opacity-100" : "opacity-0"} transition-opacity duration-300`}
+                              onLoad={() => handleIframeLoad(index)}
+                              onError={() => handleIframeError(index, true)}
+                              title={`${item.title} preview`}
+                              loading={absOffset <= 1 ? "eager" : "lazy"}
+                              sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-presentation"
+                              style={{ pointerEvents: "none" }}
+                            />
+                          ) : (
+                            <div className="absolute inset-0 flex items-center justify-center bg-navy-50 rounded-ios">
+                              <div className="text-center p-4">
+                                <IconComponent className="w-12 h-12 text-navy-300 mx-auto mb-2" />
+                                <p className="text-sm text-navy-500">Client project</p>
+                              </div>
+                            </div>
+                          )}
                         </div>
 
                         <h3 className="text-lg sm:text-xl font-bold text-navy-900 mb-2">
@@ -649,21 +694,30 @@ export default function Portfolio({ showViewMore = false }: PortfolioProps) {
                         </div>
                       </div>
                     )}
-                    <iframe
-                      ref={(el) => {
-                        if (el) {
-                          iframeRefs.current.set(index, el);
-                        }
-                      }}
-                      src={item.url}
-                      className={`desktop-preview ${isLoaded ? "opacity-100" : "opacity-0"} transition-opacity duration-300`}
-                      onLoad={() => handleIframeLoad(index)}
-                      onError={() => handleIframeError(index, true)}
-                      title={`${item.title} preview`}
-                      loading="lazy"
-                      sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-presentation"
-                      style={{ pointerEvents: "none" }}
-                    />
+                    {item.url ? (
+                      <iframe
+                        ref={(el) => {
+                          if (el) {
+                            iframeRefs.current.set(index, el);
+                          }
+                        }}
+                        src={item.url}
+                        className={`desktop-preview ${isLoaded ? "opacity-100" : "opacity-0"} transition-opacity duration-300`}
+                        onLoad={() => handleIframeLoad(index)}
+                        onError={() => handleIframeError(index, true)}
+                        title={`${item.title} preview`}
+                        loading="lazy"
+                        sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-presentation"
+                        style={{ pointerEvents: "none" }}
+                      />
+                    ) : (
+                      <div className="absolute inset-0 flex items-center justify-center bg-navy-50 rounded-ios">
+                        <div className="text-center p-4">
+                          <IconComponent className="w-12 h-12 text-navy-300 mx-auto mb-2" />
+                          <p className="text-sm text-navy-500">Client project</p>
+                        </div>
+                      </div>
+                    )}
                   </div>
 
                   <h3 className="text-xl font-bold text-navy-900 mb-2">
@@ -675,15 +729,21 @@ export default function Portfolio({ showViewMore = false }: PortfolioProps) {
                   </p>
 
                   <div className="mt-auto pt-4 border-t border-navy-100">
-                    <a
-                      href={item.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-sm text-navy-500 group-hover:text-navy-900 transition-colors flex items-center gap-2"
-                    >
-                      Visit Site
-                      <HiExternalLink className="w-4 h-4" />
-                    </a>
+                    {item.url ? (
+                      <a
+                        href={item.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-sm text-navy-500 group-hover:text-navy-900 transition-colors flex items-center gap-2"
+                      >
+                        Visit Site
+                        <HiExternalLink className="w-4 h-4" />
+                      </a>
+                    ) : (
+                      <span className="text-sm text-navy-400">
+                        Private client project
+                      </span>
+                    )}
                   </div>
                 </div>
               );

@@ -6,19 +6,19 @@ import { HiChevronLeft, HiStar } from "react-icons/hi";
 const beforeAfter = [
   {
     before: "All bookings by phone — none online",
-    after: "55% of all bookings now completed online via FareHarbor",
+    after: "Estimated 40–55% of bookings shifted online via FareHarbor",
   },
   {
     before: "7.4 second mobile load time",
-    after: "1.6 second load time — 78% faster",
+    after: "Target 1.5–2 second load time — 75%+ faster",
   },
   {
     before: "340 Google reviews invisible to website visitors",
-    after: "Live review widget on homepage; 518 reviews after 6 months",
+    after: "Live review widget surfacing social proof on homepage",
   },
   {
-    before: "2.1% booking conversion rate",
-    after: "6.8% booking conversion rate — 3.2× improvement",
+    before: "Low booking conversion rate",
+    after: "Expected 2–3× improvement with streamlined booking flow",
   },
   {
     before: "Site last updated 2018; footer read '© 2018'",
@@ -27,10 +27,10 @@ const beforeAfter = [
 ];
 
 const metrics = [
-  { value: "3.2×", label: "Booking conversions", color: "text-green-700 bg-green-50" },
-  { value: "78%", label: "Faster on mobile", color: "text-blue-700 bg-blue-50" },
-  { value: "+47%", label: "Mobile traffic", color: "text-navy-700 bg-navy-50" },
-  { value: "$71K", label: "Added revenue (6 mo)", color: "text-orange-700 bg-orange-50" },
+  { value: "2–3×", label: "Est. booking lift", color: "text-green-700 bg-green-50" },
+  { value: "75%+", label: "Faster on mobile", color: "text-blue-700 bg-blue-50" },
+  { value: "+40%", label: "Est. mobile traffic", color: "text-navy-700 bg-navy-50" },
+  { value: "3 wks", label: "Build & launch", color: "text-orange-700 bg-orange-50" },
 ];
 
 export default function ConchCruiserCaseStudy() {
@@ -42,11 +42,11 @@ export default function ConchCruiserCaseStudy() {
           <div className="max-w-3xl mx-auto">
             {/* Back Link */}
             <Link
-              href="/case-studies"
+              href="/insights"
               className="inline-flex items-center gap-1.5 text-sm text-navy-500 hover:text-navy-900 transition-colors mb-8"
             >
               <HiChevronLeft className="w-4 h-4" />
-              All Case Studies
+              Back to Insights
             </Link>
 
             {/* Header */}
@@ -132,15 +132,15 @@ export default function ConchCruiserCaseStudy() {
                   },
                   {
                     label: "Live Google Reviews widget",
-                    desc: "Pulling their top Google reviews directly onto the homepage. Auto-updates as new reviews come in — the 4.8-star average is the first thing visitors see.",
+                    desc: "Surfacing top Google reviews directly on the homepage. Auto-updates as new reviews come in — strong social proof is the first thing visitors see.",
                   },
                   {
                     label: "Post-tour review request flow",
-                    desc: "Automated email sent 24 hours after tour completion asking for a Google review, with a direct link. Review count went from 340 to 518 in 6 months.",
+                    desc: "Automated email sent 24 hours after tour completion asking for a Google review, with a direct link — designed to steadily grow review count over time.",
                   },
                   {
                     label: "Mobile performance overhaul",
-                    desc: "WebP image optimization, lazy loading, and Next.js static generation cut load time from 7.4 seconds to 1.6 seconds — a 78% improvement.",
+                    desc: "WebP image optimization, lazy loading, and Next.js static generation targeting a 75%+ improvement in mobile load time.",
                   },
                   {
                     label: "Local SEO structure",
@@ -164,14 +164,14 @@ export default function ConchCruiserCaseStudy() {
 
             {/* Before / After */}
             <div className="mb-10">
-              <h2 className="text-2xl font-bold text-navy-900 mb-4">The Results</h2>
+              <h2 className="text-2xl font-bold text-navy-900 mb-4">Projected Outcomes</h2>
               <div className="border border-navy-200 rounded-xl overflow-hidden">
                 <div className="grid grid-cols-2">
                   <div className="bg-navy-50 px-4 py-3 border-b border-navy-200">
                     <p className="text-xs font-bold text-navy-500 uppercase tracking-wider">Before</p>
                   </div>
                   <div className="bg-green-50 px-4 py-3 border-b border-navy-200 border-l border-navy-200">
-                    <p className="text-xs font-bold text-green-600 uppercase tracking-wider">After</p>
+                    <p className="text-xs font-bold text-green-600 uppercase tracking-wider">Expected After</p>
                   </div>
                 </div>
                 {beforeAfter.map((row, i) => (
@@ -189,9 +189,8 @@ export default function ConchCruiserCaseStudy() {
                 ))}
               </div>
 
-              {/* Revenue note */}
-              <p className="text-xs text-navy-400 mt-3 leading-relaxed">
-                Revenue figure based on average booking value of $94/person and tracked FareHarbor conversion volume over 6 months post-launch. Does not include estimated secondary bookings from referrals attributable to improved review count.
+              <p className="text-xs text-navy-400 mt-3 italic">
+                Projections based on similar clients in the Keys tourism market. This is a prospective case study.
               </p>
             </div>
 
@@ -203,7 +202,7 @@ export default function ConchCruiserCaseStudy() {
               </p>
               <p className="text-navy-200 leading-relaxed mt-3">
                 By building a fast, mobile-first site with FareHarbor wired in and{" "}
-                <strong className="text-white">340 five-star reviews finally visible on their own homepage</strong>, we turned what was already a great operation into one that could be found, trusted, and booked without a single phone call.
+                <strong className="text-white">hundreds of five-star reviews finally visible on their own homepage</strong>, we can turn what&apos;s already a great operation into one that can be found, trusted, and booked without a single phone call.
               </p>
             </div>
 
@@ -236,7 +235,7 @@ export default function ConchCruiserCaseStudy() {
               <p className="text-lg text-navy-600 mb-4">
                 Running tours, charters, or experiences in the Keys?
               </p>
-              <Link href="/#contact" className="btn-ios btn-navy inline-block">
+              <Link href="/contact" className="btn-ios btn-navy inline-block">
                 Let&apos;s talk
               </Link>
             </div>

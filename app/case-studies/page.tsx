@@ -16,12 +16,12 @@ const caseStudies = [
     title: "Islamorada Sport Fishing",
     subtitle: "Charter Booking Website + Online Reservations",
     description:
-      "A Keys fishing charter operation that relied entirely on phone calls and walk-ins. We built a modern booking site with real-time availability — and drove 40% of all bookings online within 90 days.",
+      "A Keys fishing charter operation that relies entirely on phone calls and walk-ins. We designed a modern booking site with real-time availability — targeting 30–40% of bookings online within the first season.",
     category: "Tourism & Fishing",
     timeline: "2 weeks",
     icon: HiTrendingUp,
     tags: ["Next.js 15", "FareHarbor API", "Photo Gallery", "SEO"],
-    metric: "+40% online bookings",
+    metric: "~40% est. online bookings",
     metricColor: "text-green-700 bg-green-50",
   },
   {
@@ -29,12 +29,12 @@ const caseStudies = [
     title: "Conch Cruiser Boat Tours",
     subtitle: "Full Rebuild + FareHarbor + Mobile Optimization",
     description:
-      "A Key West boat tour operator with an outdated 2018 site and zero online booking. Full rebuild with FareHarbor integration and live Google review widget. Booking conversion rate tripled in 6 months.",
+      "A Key West boat tour operator with an outdated 2018 site and zero online booking. Full rebuild with FareHarbor integration and live Google review widget — targeting 2–3× booking conversion improvement.",
     category: "Tourism & Boat Tours",
     timeline: "3 weeks",
     icon: HiStar,
     tags: ["Next.js 15", "FareHarbor API", "Google Reviews", "Mobile-First"],
-    metric: "3.2× booking conversions",
+    metric: "2–3× est. booking lift",
     metricColor: "text-green-700 bg-green-50",
   },
   {
@@ -42,12 +42,12 @@ const caseStudies = [
     title: "Marathon Dive Shop",
     subtitle: "Mobile Redesign + Rental Booking",
     description:
-      "A beloved dive shop with a 2016 desktop-only website hemorrhaging mobile traffic. Full mobile-first rebuild with gear rental and course booking. Bounce rate dropped 35% in the first month.",
+      "A beloved dive shop with a 2016 desktop-only website hemorrhaging mobile traffic. Full mobile-first rebuild with gear rental and course booking — targeting a 30%+ bounce rate reduction.",
     category: "Water Sports",
     timeline: "3 weeks",
     icon: HiDevicePhoneMobile,
     tags: ["Mobile-First", "React", "Booking System", "Performance"],
-    metric: "−35% bounce rate",
+    metric: "−30%+ est. bounce rate",
     metricColor: "text-blue-700 bg-blue-50",
   },
   {
@@ -94,8 +94,8 @@ export default function CaseStudiesPage() {
                 Case Studies
               </h1>
               <p className="text-xl text-navy-600 max-w-2xl mx-auto">
-                Real projects, real results. See how we help local businesses
-                build a strong online presence and grow measurably.
+                See how we help local businesses build a strong online presence.
+                These studies showcase our approach and projected outcomes.
               </p>
             </div>
 
@@ -197,7 +197,7 @@ export default function CaseStudiesPage() {
                 Ready to see what we can do for your business?
               </p>
               <Link
-                href="/#contact"
+                href="/contact"
                 className="btn-ios btn-navy inline-flex items-center gap-2"
               >
                 Get Started

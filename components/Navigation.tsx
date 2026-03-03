@@ -5,10 +5,10 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 const navLinks = [
+  { href: '/', label: 'Home' },
   { href: '/services', label: 'Services' },
   { href: '/portfolio', label: 'Portfolio' },
-  { href: '/case-studies', label: 'Case Studies' },
-  { href: '/blog', label: 'Blog' },
+  { href: '/insights', label: 'Insights' },
   { href: '/about', label: 'About' },
 ];
 
@@ -73,20 +73,20 @@ export default function Navigation() {
                 )}
               </Link>
             ))}
-            <a
-              href="/#contact"
+            <Link
+              href="/contact"
               className={`font-medium transition-colors ${
-                pathname === '/' ? 'text-navy-600 hover:text-navy-900' : 'text-navy-600 hover:text-navy-900'
+                isActive('/contact') ? 'text-navy-900' : 'text-navy-600 hover:text-navy-900'
               }`}
             >
               Contact
-            </a>
-            <a
-              href="/#contact"
+            </Link>
+            <Link
+              href="/contact"
               className="btn-ios btn-primary"
             >
               Get Started
-            </a>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -135,21 +135,23 @@ export default function Navigation() {
                 {link.label}
               </Link>
             ))}
-            <a
-              href="/#contact"
-              className="block px-4 py-3 rounded-xl text-navy-700 font-medium hover:bg-navy-50 transition-colors"
+            <Link
+              href="/contact"
+              className={`block px-4 py-3 rounded-xl font-medium transition-colors ${
+                isActive('/contact') ? 'bg-navy-50 text-navy-900' : 'text-navy-700 hover:bg-navy-50'
+              }`}
               onClick={closeMenu}
             >
               Contact
-            </a>
+            </Link>
             <div className="pt-3 px-4">
-              <a
-                href="/#contact"
+              <Link
+                href="/contact"
                 className="btn-ios btn-primary block text-center w-full"
                 onClick={closeMenu}
               >
                 Get Started
-              </a>
+              </Link>
             </div>
           </div>
         </div>

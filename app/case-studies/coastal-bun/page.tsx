@@ -23,11 +23,11 @@ export default function CoastalBunCaseStudy() {
           <div className="max-w-3xl mx-auto">
             {/* Back Link */}
             <Link
-              href="/case-studies"
+              href="/insights"
               className="inline-flex items-center gap-1.5 text-sm text-navy-500 hover:text-navy-900 transition-colors mb-8"
             >
               <HiChevronLeft className="w-4 h-4" />
-              All Case Studies
+              Back to Insights
             </Link>
 
             {/* Header */}
@@ -145,7 +145,7 @@ export default function CoastalBunCaseStudy() {
             {/* Before / After */}
             <div className="mb-10">
               <h2 className="text-2xl font-bold text-navy-900 mb-4">
-                The Results
+                What We Delivered
               </h2>
               <div className="border border-navy-200 rounded-xl overflow-hidden">
                 <div className="grid grid-cols-2">
@@ -156,7 +156,7 @@ export default function CoastalBunCaseStudy() {
                   </div>
                   <div className="bg-green-50 px-4 py-3 border-b border-navy-200 border-l border-navy-200">
                     <p className="text-xs font-bold text-green-600 uppercase tracking-wider">
-                      After
+                      Now Live
                     </p>
                   </div>
                 </div>
@@ -217,7 +217,7 @@ export default function CoastalBunCaseStudy() {
             {/* Live Site Link */}
             <div className="mb-12 pt-6 border-t border-navy-100">
               <a
-                href="https://pink-palm.shop/"
+                href="https://costalbun.shop"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-navy-500 hover:text-navy-900 transition-colors text-sm font-medium"
@@ -230,9 +230,9 @@ export default function CoastalBunCaseStudy() {
             {/* CTA */}
             <div className="text-center pt-8 border-t border-navy-200">
               <p className="text-lg text-navy-600 mb-4">
-                Want results like this for your business?
+                Want a site like this for your business?
               </p>
-              <Link href="/#contact" className="btn-ios btn-navy inline-block">
+              <Link href="/contact" className="btn-ios btn-navy inline-block">
                 Get in touch
               </Link>
             </div>

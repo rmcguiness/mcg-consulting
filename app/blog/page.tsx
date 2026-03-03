@@ -102,7 +102,7 @@ export default function BlogPage() {
                 Want a free audit of your current website?
               </p>
               <Link
-                href="/#contact"
+                href="/contact"
                 className="btn-ios btn-navy inline-flex items-center gap-2"
               >
                 Get in touch

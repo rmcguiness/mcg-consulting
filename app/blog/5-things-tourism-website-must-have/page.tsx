@@ -175,7 +175,7 @@ export default function FiveThingsPost() {
               <p className="text-navy-200 leading-relaxed mb-4">
                 MCG Consulting helps Florida Keys tourism businesses fix exactly these problems. If you want a free audit of your current site, get in touch — no commitment required.
               </p>
-              <Link href="/#contact" className="btn-ios btn-primary inline-block">
+              <Link href="/contact" className="btn-ios btn-primary inline-block">
                 Get a free site audit
               </Link>
             </div>

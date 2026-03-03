@@ -7,7 +7,7 @@ import { HiDevicePhoneMobile } from "react-icons/hi2";
 const beforeAfter = [
   {
     before: "72% mobile bounce rate — users left immediately",
-    after: "37% bounce rate — 35-point improvement in 30 days",
+    after: "Expected 30–40 point bounce rate improvement",
   },
   {
     before: "Desktop-only 2016 website, broken on phones",
@@ -23,14 +23,14 @@ const beforeAfter = [
   },
   {
     before: "Site load time: 8.2 seconds on mobile",
-    after: "Site load time: 1.4 seconds (83% faster)",
+    after: "Target load time: under 2 seconds (80%+ faster)",
   },
 ];
 
 const metrics = [
-  { value: "−35%", label: "Bounce rate", color: "text-blue-700 bg-blue-50" },
-  { value: "1.4s", label: "Mobile load time", color: "text-green-700 bg-green-50" },
-  { value: "3×", label: "Mobile conversions", color: "text-navy-700 bg-navy-50" },
+  { value: "−30%+", label: "Est. bounce rate drop", color: "text-blue-700 bg-blue-50" },
+  { value: "<2s", label: "Target load time", color: "text-green-700 bg-green-50" },
+  { value: "2–3×", label: "Est. mobile conversions", color: "text-navy-700 bg-navy-50" },
   { value: "3 wks", label: "Build & launch", color: "text-orange-700 bg-orange-50" },
 ];
 
@@ -43,11 +43,11 @@ export default function MarathonDiveShopCaseStudy() {
           <div className="max-w-3xl mx-auto">
             {/* Back Link */}
             <Link
-              href="/case-studies"
+              href="/insights"
               className="inline-flex items-center gap-1.5 text-sm text-navy-500 hover:text-navy-900 transition-colors mb-8"
             >
               <HiChevronLeft className="w-4 h-4" />
-              All Case Studies
+              Back to Insights
             </Link>
 
             {/* Header */}
@@ -154,7 +154,7 @@ export default function MarathonDiveShopCaseStudy() {
                   },
                   {
                     label: "Performance overhaul",
-                    desc: "Image optimization (WebP + lazy loading), Next.js static generation, and Vercel Edge CDN cut load time from 8.2s to 1.4s on mobile",
+                    desc: "Image optimization (WebP + lazy loading), Next.js static generation, and Vercel Edge CDN targeting 80%+ load time improvement on mobile",
                   },
                   {
                     label: "Trip booking + calendar",
@@ -177,7 +177,7 @@ export default function MarathonDiveShopCaseStudy() {
             {/* Before / After */}
             <div className="mb-10">
               <h2 className="text-2xl font-bold text-navy-900 mb-4">
-                The Results
+                Projected Outcomes
               </h2>
               <div className="border border-navy-200 rounded-xl overflow-hidden">
                 <div className="grid grid-cols-2">
@@ -188,7 +188,7 @@ export default function MarathonDiveShopCaseStudy() {
                   </div>
                   <div className="bg-green-50 px-4 py-3 border-b border-navy-200 border-l border-navy-200">
                     <p className="text-xs font-bold text-green-600 uppercase tracking-wider">
-                      After
+                      Expected After
                     </p>
                   </div>
                 </div>
@@ -208,6 +208,9 @@ export default function MarathonDiveShopCaseStudy() {
                   </div>
                 ))}
               </div>
+              <p className="text-xs text-navy-400 mt-3 italic">
+                Projections based on similar clients in the Keys tourism market. This is a prospective case study.
+              </p>
             </div>
 
             {/* Why It Matters */}
@@ -223,9 +226,9 @@ export default function MarathonDiveShopCaseStudy() {
                 <strong className="text-white">
                   the majority of lost mobile traffic into converting visitors
                 </strong>
-                . Mobile conversions tripled in the first 30 days, and the
-                online rental system reduced in-person check-in friction during
-                peak season.
+                . A mobile-first rebuild like this can realistically double or triple
+                conversions, while an online rental system reduces in-person check-in
+                friction during peak season.
               </p>
             </div>
 
@@ -259,7 +262,7 @@ export default function MarathonDiveShopCaseStudy() {
               <p className="text-lg text-navy-600 mb-4">
                 Is your website losing mobile visitors? Let&apos;s fix that.
               </p>
-              <Link href="/#contact" className="btn-ios btn-navy inline-block">
+              <Link href="/contact" className="btn-ios btn-navy inline-block">
                 Get in touch
               </Link>
             </div>

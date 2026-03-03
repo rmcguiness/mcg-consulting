@@ -6,11 +6,11 @@ import { HiChevronLeft, HiTrendingUp } from "react-icons/hi";
 const beforeAfter = [
   {
     before: "Bookings only by phone or walk-in",
-    after: "40% of all bookings now completed online",
+    after: "Estimated 30–40% of bookings shifted online",
   },
   {
     before: "No website — invisible to search",
-    after: "Page 1 Google ranking for 'Islamorada fishing charter'",
+    after: "Targeting Page 1 for 'Islamorada fishing charter'",
   },
   {
     before: "No way to show trip options online",
@@ -22,14 +22,14 @@ const beforeAfter = [
   },
   {
     before: "Seasonal call volume overwhelming staff",
-    after: "Self-serve booking with real-time availability — staff freed up",
+    after: "Self-serve booking with real-time availability — reducing staff load",
   },
 ];
 
 const metrics = [
-  { value: "40%", label: "Bookings now online", color: "text-green-700 bg-green-50" },
-  { value: "3 mo", label: "To see full impact", color: "text-navy-700 bg-navy-50" },
-  { value: "#1", label: "Local search rank", color: "text-blue-700 bg-blue-50" },
+  { value: "~40%", label: "Est. online bookings", color: "text-green-700 bg-green-50" },
+  { value: "3 mo", label: "Expected time to impact", color: "text-navy-700 bg-navy-50" },
+  { value: "Top 5", label: "Target search rank", color: "text-blue-700 bg-blue-50" },
   { value: "2 wks", label: "Build & launch time", color: "text-orange-700 bg-orange-50" },
 ];
 
@@ -42,11 +42,11 @@ export default function IslamoradaFishingCaseStudy() {
           <div className="max-w-3xl mx-auto">
             {/* Back Link */}
             <Link
-              href="/case-studies"
+              href="/insights"
               className="inline-flex items-center gap-1.5 text-sm text-navy-500 hover:text-navy-900 transition-colors mb-8"
             >
               <HiChevronLeft className="w-4 h-4" />
-              All Case Studies
+              Back to Insights
             </Link>
 
             {/* Header */}
@@ -176,7 +176,7 @@ export default function IslamoradaFishingCaseStudy() {
             {/* Before / After */}
             <div className="mb-10">
               <h2 className="text-2xl font-bold text-navy-900 mb-4">
-                The Results
+                Projected Outcomes
               </h2>
               <div className="border border-navy-200 rounded-xl overflow-hidden">
                 <div className="grid grid-cols-2">
@@ -187,7 +187,7 @@ export default function IslamoradaFishingCaseStudy() {
                   </div>
                   <div className="bg-green-50 px-4 py-3 border-b border-navy-200 border-l border-navy-200">
                     <p className="text-xs font-bold text-green-600 uppercase tracking-wider">
-                      After
+                      Expected After
                     </p>
                   </div>
                 </div>
@@ -207,6 +207,9 @@ export default function IslamoradaFishingCaseStudy() {
                   </div>
                 ))}
               </div>
+              <p className="text-xs text-navy-400 mt-3 italic">
+                Projections based on similar clients in the Keys tourism market. This is a prospective case study.
+              </p>
             </div>
 
             {/* Why It Matters */}
@@ -221,8 +224,8 @@ export default function IslamoradaFishingCaseStudy() {
                 <strong className="text-white">
                   frictionless online booking flow
                 </strong>{" "}
-                and first-page search visibility, this charter shifted 40% of
-                its booking volume to self-serve in a single season — reducing
+                and first-page search visibility, a charter like this could shift 30–40% of
+                booking volume to self-serve within a single season — reducing
                 phone load on staff while capturing higher-value tourists who
                 plan ahead.
               </p>
@@ -257,7 +260,7 @@ export default function IslamoradaFishingCaseStudy() {
               <p className="text-lg text-navy-600 mb-4">
                 Own a charter, tour, or experience business in the Keys?
               </p>
-              <Link href="/#contact" className="btn-ios btn-navy inline-block">
+              <Link href="/contact" className="btn-ios btn-navy inline-block">
                 Let&apos;s talk
               </Link>
             </div>
