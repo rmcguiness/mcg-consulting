@@ -82,10 +82,10 @@ export default function Navigation() {
               Contact
             </Link>
             <Link
-              href="/contact"
+              href="/audit"
               className="btn-ios btn-primary"
             >
-              Get Started
+              Free Audit
             </Link>
           </div>
 
@@ -146,11 +146,11 @@ export default function Navigation() {
             </Link>
             <div className="pt-3 px-4">
               <Link
-                href="/contact"
+                href="/audit"
                 className="btn-ios btn-primary block text-center w-full"
                 onClick={closeMenu}
               >
-                Get Started
+                Free Audit
               </Link>
             </div>
           </div>
