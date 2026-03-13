@@ -12,6 +12,7 @@ const navLinks = [
   { href: '/portfolio', label: 'Portfolio' },
   { href: '/insights', label: 'Insights' },
   { href: '/about', label: 'About' },
+  { href: '/faq', label: 'FAQ' },
 ];
 
 export default function Navigation() {
