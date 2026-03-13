@@ -5,6 +5,26 @@ import { HiArrowRight, HiNewspaper } from "react-icons/hi";
 
 const posts = [
   {
+    slug: "restaurant-google-visibility",
+    title: "How Florida Keys Restaurants Are Losing Google Visibility (And What to Do)",
+    excerpt:
+      "A tourist searches 'best seafood restaurant Key Largo' at 7pm on their phone. Three restaurants show up in Google Maps. Yours isn't one of them. Here's why — and how to fix it.",
+    category: "Restaurant SEO",
+    readTime: "6 min read",
+    date: "March 2026",
+    tags: ["Restaurants", "Google Maps", "Local SEO"],
+  },
+  {
+    slug: "restaurant-online-reservations",
+    title: "Why Your Florida Keys Restaurant Needs Online Reservations (Even If You Think You Don't)",
+    excerpt:
+      "Tourists plan Keys trips like hotel stays — online, at 11pm. If your restaurant can't take reservations digitally, you're losing covers to competitors who can.",
+    category: "Restaurant Strategy",
+    readTime: "4 min read",
+    date: "March 2026",
+    tags: ["Restaurants", "Reservations", "OpenTable", "Direct Booking"],
+  },
+  {
     slug: "losing-customers-to-google",
     title: "Why Florida Keys Businesses Are Losing Customers to Google Before They Even Know It",
     excerpt:
