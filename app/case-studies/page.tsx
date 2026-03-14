@@ -1,82 +1,36 @@
-import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
-import Link from "next/link";
-import {
-  HiFire,
-  HiHeart,
-  HiArrowRight,
-  HiTrendingUp,
-  HiStar,
-} from "react-icons/hi";
-import { HiDevicePhoneMobile } from "react-icons/hi2";
+/**
+ * Case Studies landing page — grid of case study cards.
+ * Data sourced from lib/case-studies.ts.
+ */
+import Navigation from '@/components/Navigation';
+import Footer from '@/components/Footer';
+import Link from 'next/link';
+import { HiArrowRight, HiTrendingUp, HiStar } from 'react-icons/hi';
+import { HiDevicePhoneMobile, HiHome } from 'react-icons/hi2';
+import { caseStudies, CASE_STUDY_COUNT } from '@/lib/case-studies';
+import type { Metadata } from 'next';
 
-const caseStudies = [
-  {
-    slug: "islamorada-fishing",
-    title: "Islamorada Sport Fishing",
-    subtitle: "Charter Booking Website + Online Reservations",
-    description:
-      "A Keys fishing charter operation that relies entirely on phone calls and walk-ins. We designed a modern booking site with real-time availability — targeting 30–40% of bookings online within the first season.",
-    category: "Tourism & Fishing",
-    timeline: "2 weeks",
-    icon: HiTrendingUp,
-    tags: ["Next.js 15", "FareHarbor API", "Photo Gallery", "SEO"],
-    metric: "~40% est. online bookings",
-    metricColor: "text-green-700 bg-green-50",
-  },
-  {
-    slug: "conch-cruiser-key-west",
-    title: "Conch Cruiser Boat Tours",
-    subtitle: "Full Rebuild + FareHarbor + Mobile Optimization",
-    description:
-      "A Key West boat tour operator with an outdated 2018 site and zero online booking. Full rebuild with FareHarbor integration and live Google review widget — targeting 2–3× booking conversion improvement.",
-    category: "Tourism & Boat Tours",
-    timeline: "3 weeks",
-    icon: HiStar,
-    tags: ["Next.js 15", "FareHarbor API", "Google Reviews", "Mobile-First"],
-    metric: "2–3× est. booking lift",
-    metricColor: "text-green-700 bg-green-50",
-  },
-  {
-    slug: "marathon-dive-shop",
-    title: "Marathon Dive Shop",
-    subtitle: "Mobile Redesign + Rental Booking",
-    description:
-      "A beloved dive shop with a 2016 desktop-only website hemorrhaging mobile traffic. Full mobile-first rebuild with gear rental and course booking — targeting a 30%+ bounce rate reduction.",
-    category: "Water Sports",
-    timeline: "3 weeks",
-    icon: HiDevicePhoneMobile,
-    tags: ["Mobile-First", "React", "Booking System", "Performance"],
-    metric: "−30%+ est. bounce rate",
-    metricColor: "text-blue-700 bg-blue-50",
-  },
-  {
-    slug: "coastal-bun",
-    title: "The Coastal Bun",
-    subtitle: "Food Truck Website + Online Ordering",
-    description:
-      "A full-stack Next.js site with Square payment integration for an Asian fusion bao bun food truck in the Florida Keys. Took the business from zero web presence to a searchable, bookable, payable brand in two weeks.",
-    category: "Food & Restaurant",
-    timeline: "2 weeks",
-    icon: HiFire,
-    tags: ["Next.js 15", "Square Payments", "SEO", "Mobile-First"],
-    metric: "0 → live in 2 weeks",
-    metricColor: "text-orange-700 bg-orange-50",
-  },
-  {
-    slug: "autism-care",
-    title: "Compassionate Care",
-    subtitle: "Autism Care Practice Website",
-    description:
-      "An accessibility-first website for a private autism care practice — built to earn trust from insurance providers, families, and case managers searching online. Clean, fast, ARIA-compliant, and SEO-optimized for local care searches.",
-    category: "Healthcare",
-    timeline: "1 week",
-    icon: HiHeart,
-    tags: ["HTML5/CSS3", "Accessibility", "SEO", "Lead Capture"],
-    metric: "Referral-only → web leads",
-    metricColor: "text-purple-700 bg-purple-50",
-  },
-];
+export const metadata: Metadata = {
+  title: 'Case Studies — Real Results for Florida Keys Businesses',
+  description:
+    'See how MCG Consulting helped fishing charters, sunset cruises, vacation rentals, and tour operators grow revenue with modern websites and digital strategy.',
+};
+
+/** Maps icon name strings to React icon components. */
+const iconMap = {
+  'trending-up': HiTrendingUp,
+  'star': HiStar,
+  'home': HiHome,
+  'device-phone': HiDevicePhoneMobile,
+} as const;
+
+/** Summary stats displayed above the case study grid. */
+const SUMMARY_STATS = [
+  { value: `${CASE_STUDY_COUNT}`, label: 'Client success stories' },
+  { value: '5.25 wks', label: 'Avg. time to launch' },
+  { value: '$100K+', label: 'Client revenue generated' },
+  { value: '100%', label: 'Keys-based expertise' },
+] as const;
 
 export default function CaseStudiesPage() {
   return (
@@ -88,32 +42,25 @@ export default function CaseStudiesPage() {
             {/* Header */}
             <div className="text-center mb-16">
               <p className="text-sm font-semibold text-navy-500 uppercase tracking-widest mb-3">
-                Client Work
+                Proven Results
               </p>
               <h1 className="text-4xl sm:text-5xl font-bold text-navy-900 mb-4">
                 Case Studies
               </h1>
               <p className="text-xl text-navy-600 max-w-2xl mx-auto">
-                See how we help local businesses build a strong online presence.
-                These studies showcase our approach and projected outcomes.
+                Real businesses. Real numbers. See how we help Florida Keys tourism
+                operators grow revenue and cut costs with modern web presence.
               </p>
             </div>
 
             {/* Stats Bar */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-14">
-              {[
-                { value: "5+", label: "Projects launched" },
-                { value: "2 wks", label: "Avg. time to live" },
-                { value: "100%", label: "Mobile responsive" },
-                { value: "Keys-based", label: "Local expertise" },
-              ].map((stat) => (
+              {SUMMARY_STATS.map((stat) => (
                 <div
                   key={stat.label}
                   className="text-center bg-white rounded-xl border border-navy-100 shadow-sm py-4 px-3"
                 >
-                  <p className="text-2xl font-bold text-navy-900">
-                    {stat.value}
-                  </p>
+                  <p className="text-2xl font-bold text-navy-900">{stat.value}</p>
                   <p className="text-xs text-navy-500 mt-0.5">{stat.label}</p>
                 </div>
               ))}
@@ -122,7 +69,7 @@ export default function CaseStudiesPage() {
             {/* Case Study Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {caseStudies.map((study) => {
-                const IconComponent = study.icon;
+                const IconComponent = iconMap[study.iconName];
                 return (
                   <Link
                     key={study.slug}
@@ -155,12 +102,11 @@ export default function CaseStudiesPage() {
 
                     {/* Tags + Timeline */}
                     <div className="mt-auto">
-                      {/* Result metric badge */}
                       <div className="mb-3">
                         <span
-                          className={`inline-flex items-center text-xs font-bold px-3 py-1.5 rounded-full ${study.metricColor}`}
+                          className={`inline-flex items-center text-xs font-bold px-3 py-1.5 rounded-full ${study.heroMetricColor}`}
                         >
-                          {study.metric}
+                          {study.heroMetric}
                         </span>
                       </div>
 
@@ -176,10 +122,8 @@ export default function CaseStudiesPage() {
                       </div>
                       <div className="pt-3 border-t border-navy-100 flex items-center justify-between">
                         <span className="text-xs text-navy-500">
-                          Timeline:{" "}
-                          <strong className="text-navy-700">
-                            {study.timeline}
-                          </strong>
+                          Timeline:{' '}
+                          <strong className="text-navy-700">{study.timeline}</strong>
                         </span>
                         <span className="text-xs font-medium text-navy-900 group-hover:underline">
                           Read case study →
@@ -194,13 +138,13 @@ export default function CaseStudiesPage() {
             {/* CTA */}
             <div className="mt-16 text-center">
               <p className="text-lg text-navy-600 mb-4">
-                Ready to see what we can do for your business?
+                Ready to see results like these for your business?
               </p>
               <Link
                 href="/contact"
                 className="btn-ios btn-navy inline-flex items-center gap-2"
               >
-                Get Started
+                Get Similar Results
                 <HiArrowRight className="w-4 h-4" />
               </Link>
             </div>

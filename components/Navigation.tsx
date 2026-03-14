@@ -9,6 +9,7 @@ const navLinks = [
   { href: '/services', label: 'Services' },
   { href: '/services/fishing-charters', label: 'Charters' },
   { href: '/services/vacation-rentals', label: 'Rentals' },
+  { href: '/case-studies', label: 'Case Studies' },
   { href: '/portfolio', label: 'Portfolio' },
   { href: '/insights', label: 'Insights' },
   { href: '/about', label: 'About' },
