@@ -23,7 +23,7 @@ export default function ServicesPage() {
                 Specialized packages built for specific industries we know inside and out.
               </p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
               <Link
                 href="/services/fishing-charters"
                 className="bg-white rounded-2xl p-8 shadow-ios hover:shadow-ios-lg transition-shadow block group"
@@ -46,6 +46,18 @@ export default function ServicesPage() {
                 </h3>
                 <p className="text-navy-600 text-sm leading-relaxed">
                   Modern websites for vacation rental managers. Lodgify/Guesty integration, legacy platform migration, direct booking SEO — stop losing guests to VRBO commissions.
+                </p>
+              </Link>
+              <Link
+                href="/services/sunset-cruises"
+                className="bg-white rounded-2xl p-8 shadow-ios hover:shadow-ios-lg transition-shadow block group"
+              >
+                <h3 className="text-xl font-bold text-navy-900 mb-2 flex items-center gap-2">
+                  Sunset Cruise Websites
+                  <HiArrowRight className="w-5 h-5 text-navy-400 group-hover:text-navy-900 transition-colors" />
+                </h3>
+                <p className="text-navy-600 text-sm leading-relaxed">
+                  Booking-ready websites for sunset cruise operators. Online ticketing, stunning photo galleries, SEO for Key West & Key Largo — stand out from dozens of competitors.
                 </p>
               </Link>
             </div>
