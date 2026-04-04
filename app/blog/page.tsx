@@ -5,6 +5,16 @@ import { HiArrowRight, HiNewspaper } from "react-icons/hi";
 
 const posts = [
   {
+    slug: "sunset-cruise-direct-booking",
+    title: "Why Florida Keys Sunset Cruise Operators Are Paying Too Much to Viator (And How to Stop)",
+    excerpt:
+      "Viator takes 20-30% of every sunset cruise booking. On a $50 ticket, that's $10-$15 per customer lost. Here's the commission math and a realistic direct booking alternative.",
+    category: "Direct Booking Strategy",
+    readTime: "5 min read",
+    date: "March 2026",
+    tags: ["Sunset Cruises", "Direct Booking", "Viator", "OTA Commissions"],
+  },
+  {
     slug: "losing-customers-to-google",
     title: "Why Florida Keys Businesses Are Losing Customers to Google Before They Even Know It",
     excerpt:
