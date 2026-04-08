@@ -23,7 +23,7 @@ export default function ServicesPage() {
                 Specialized packages built for specific industries we know inside and out.
               </p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
               <Link
                 href="/services/fishing-charters"
                 className="bg-white rounded-2xl p-8 shadow-ios hover:shadow-ios-lg transition-shadow block group"
@@ -46,6 +46,30 @@ export default function ServicesPage() {
                 </h3>
                 <p className="text-navy-600 text-sm leading-relaxed">
                   Modern websites for vacation rental managers. Lodgify/Guesty integration, legacy platform migration, direct booking SEO — stop losing guests to VRBO commissions.
+                </p>
+              </Link>
+              <Link
+                href="/services/snorkeling-tours"
+                className="bg-white rounded-2xl p-8 shadow-ios hover:shadow-ios-lg transition-shadow block group"
+              >
+                <h3 className="text-xl font-bold text-navy-900 mb-2 flex items-center gap-2">
+                  Snorkeling Tour Websites
+                  <HiArrowRight className="w-5 h-5 text-navy-400 group-hover:text-navy-900 transition-colors" />
+                </h3>
+                <p className="text-navy-600 text-sm leading-relaxed">
+                  Booking-ready websites for Florida Keys snorkeling tour operators. Local SEO for &ldquo;snorkeling Key Largo,&rdquo; underwater photo galleries, FareHarbor integration.
+                </p>
+              </Link>
+              <Link
+                href="/services/parasailing"
+                className="bg-white rounded-2xl p-8 shadow-ios hover:shadow-ios-lg transition-shadow block group"
+              >
+                <h3 className="text-xl font-bold text-navy-900 mb-2 flex items-center gap-2">
+                  Parasailing Websites
+                  <HiArrowRight className="w-5 h-5 text-navy-400 group-hover:text-navy-900 transition-colors" />
+                </h3>
+                <p className="text-navy-600 text-sm leading-relaxed">
+                  Booking-ready websites for Florida Keys parasailing operators. Real-time availability, weight/weather disclaimers, mobile-first booking — capture every summer flight.
                 </p>
               </Link>
             </div>
